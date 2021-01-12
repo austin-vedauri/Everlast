@@ -1,5 +1,5 @@
 ﻿body {
-    padding-top: 50px;
+    padding-top: 60px;
     padding-bottom: 20px;
 }
 
@@ -33,6 +33,10 @@ textarea {
     height: 100vh;
 }
 
+.v-cover-image {
+    background: url(/img/ea.jpg) no-repeat center center fixed;
+}
+
 .v-cover-section-content {
     margin: 0;
     position: relative;
@@ -49,3 +53,49 @@ textarea {
     margin: 10px;
 }
 
+.v-center {
+    width: 100%;
+    max-width: 100%;
+    margin: 0 auto;
+}
+
+.v-textarea {
+    max-width: 100%;
+    min-width: 100%;
+    max-height: 150px;
+    min-height: 150px;
+}
+
+.v-navbar {
+    margin: 0;
+    width: 100%;
+}
+
+.v-nav-item {
+    width: 25%;
+    text-align: center;
+    font-size: 20px;
+}
+
+@media (max-width: 991px) {
+    .v-center {
+        width: 50%;
+        max-width: 50%;
+        margin: 0 auto;
+    }
+
+    .v-nav-item {
+        width: auto;
+        text-align: center;
+        font-size: 20px;
+        border-bottom: 1px solid #808080;
+    }
+}
+
+@media (max-width: 768px) {
+    .v-center {
+        width: 100%;
+        max-width: 100%;
+        margin: 0 auto;
+    }
+}

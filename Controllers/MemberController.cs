@@ -10,9 +10,9 @@ namespace Everlast.Controllers
     public class MemberController : Controller
     {
         // GET: Member
-        public ActionResult Index(MemberViewModel model)
+        public ActionResult Index()
         {
-            return View(model);
+            return View(new MemberViewModel());
         }
     }
 }

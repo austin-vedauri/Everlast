@@ -1,0 +1,14 @@
+﻿@model Everlast.Models.MemberViewModel
+@{
+    ViewBag.Title = "Arrived";
+}
+
+<h2>Congratulations @Model.Username!</h2>
+
+<p>You're now an official member of Everlasting Aesthetics!</p>
+
+<br />
+
+<p>Enjoy the benefits... Check out your account</p>
+
+@Html.ActionLink("Account", "Index", "Member", null, new { @class = "btn btn-lg btn-primary" })

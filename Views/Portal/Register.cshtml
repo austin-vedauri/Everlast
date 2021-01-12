@@ -1,7 +1,38 @@
-﻿
+﻿@model Everlast.Models.MemberViewModel
 @{
     ViewBag.Title = "Register";
 }
 
 <h2>Register</h2>
+
+
+@using (Html.BeginForm("Register", "Portal", FormMethod.Post))
+{
+    @Html.LabelFor(m => m.FirstName, "First Name", null)
+    @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control" })
+    <br />
+    @Html.LabelFor(m => m.LastName, "Last Name", null)
+    @Html.TextBoxFor(m => m.LastName, new { @class = "form-control" })
+    <br />
+    @Html.LabelFor(m => m.PhoneNumber, "Phone", null)
+    @Html.TextBoxFor(m => m.PhoneNumber, new { @class = "form-control" })
+    <br />
+    @Html.LabelFor(m => m.EmailAddress, "Email", null)
+    @Html.TextBoxFor(m => m.EmailAddress, new { @class = "form-control" })
+    <br />
+    @Html.LabelFor(m => m.Username, "Username", null)
+    @Html.TextBoxFor(m => m.Username, new { @class = "form-control" })
+    <br />
+    @Html.LabelFor(m => m.Password, "Password", null)
+    @Html.TextBoxFor(m => m.Password, new { @class = "form-control" })
+
+    <button type="submit" class="btn btn-lg btn-primary">Register</button>
+}
+
+
+
+
+
+
+
 

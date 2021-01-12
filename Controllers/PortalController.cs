@@ -18,41 +18,46 @@ namespace Everlast.Controllers
 
         public ActionResult Login()
         {
-            return View();
+            return View(new MemberViewModel());
         }
 
         public ActionResult Register()
         {
-            return View();
+            return View(new MemberViewModel());
         }
 
         [HttpPost]
         public ActionResult Login(MemberViewModel model)
         {
-            int result = 0;
+            //int result = 0;
+            //result = new PortalCRUD().Login(model);
+            //if (result > 0)
+            //{
+            //    model = new MemberCRUD().Read(result);
+            //    new SessionsController().CreateMemberSession(model);
+            //    return View("Index", "Member", model);
+            //}
 
-            result = new PortalCRUD().Login(model);
+            new SessionsController().CreateMemberSession(model);
+            model.MemberId = 7;
+            return View("Index", "Member", model);
+        }
 
-            if (result > 0)
-            {
-                model = new MemberCRUD().Read(result);
-                new SessionsController().CreateMemberSession(model);
-                return View("Index", "Member", model);
-            }
-
-            return View();
+        public ActionResult Logout()
+        {
+            new SessionsController().DestroyMemberSession();
+            return RedirectToAction("Index", "Home");
         }
 
         [HttpPost]
         public ActionResult Register(MemberViewModel model)
         {
-            int result = 0;
-
-            result = new PortalCRUD().Register(model);
-            
+            //int result = 0;
+            //result = new PortalCRUD().Register(model);
             // either send through email validation or create user on the spot
 
-            return View();
+            int sessionResult = new SessionsController().CreateMemberSession(model);
+            return View("Arrived", model);
         }
 
     }

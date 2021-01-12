@@ -12,37 +12,35 @@ namespace Everlast.Controllers
     {
         public int CreateMemberSession(MemberViewModel model)
         {
-            if (Session.Count > 0)
+
+            CurrentProfile profile = new CurrentProfile()
             {
-                this.DestroyMemberSession();
-            }
+                FirstName = model.FirstName,
+                MemberGuid = new Guid(),
+                MemberId = 1
+            };
 
-            PropertyInfo[] properties = typeof(MemberViewModel).GetProperties();
+            System.Web.HttpContext.Current.Session["Profile"] = profile;
 
-            foreach (PropertyInfo property in properties)
-            {
-                Session.Add(property.Name, property.GetValue(property));
-            }
-
-            return Session.Count;
+            return 1;
         }
 
-        public HttpSessionStateBase ReadMemberSession()
+        public CurrentProfile ReadMemberSession()
         {
-            return Session.Contents;
+            return System.Web.HttpContext.Current.Session["Profile"] as CurrentProfile;
         }
 
         public int UpdateMemberSession(MemberViewModel model)
         {
             this.DestroyMemberSession();
             this.CreateMemberSession(model);
-            return Session.Count;
+            return 1;
         }
 
         public int DestroyMemberSession()
         {
-            Session.RemoveAll();
-            return Session.Count;
+            System.Web.HttpContext.Current.Session["Profile"] = null;
+            return 1;
         }
     }
 }
