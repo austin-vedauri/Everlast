@@ -5,8 +5,8 @@ using System.Web;
 
 namespace Everlast.Models
 {
-    public class ScheduleViewModel
+    public class Schedule
     {
-        public List<TimeSlotViewModel> TimeSlots { get; set; }
+        
     }
 }

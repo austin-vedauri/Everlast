@@ -1,0 +1,131 @@
+﻿@model Everlast.Models.Party
+
+@{
+    ViewBag.Title = "Read";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Read</h2>
+
+<div>
+    <h4>Party</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.PartyGuid)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PartyGuid)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Title)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Title)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EntryFee)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EntryFee)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Active)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Active)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PartyStart)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PartyStart)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PartyEnd)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PartyEnd)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PartyTimeSpan)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PartyTimeSpan)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AddressLineOne)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AddressLineOne)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AddressLineTwo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AddressLineTwo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AddressCity)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AddressCity)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AddressPostalCode)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AddressPostalCode)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AddressState)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AddressState)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PartyImagePath)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PartyImagePath)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.PartyId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

@@ -10,14 +10,14 @@ namespace Everlast.Controllers
 {
     public class SessionsController : Controller
     {
-        public int CreateMemberSession(MemberViewModel model)
+        public int CreateMemberSession(Member model)
         {
 
             CurrentProfile profile = new CurrentProfile()
             {
                 FirstName = model.FirstName,
-                MemberGuid = new Guid(),
-                MemberId = 1
+                MemberGuid = model.MemberGuid,
+                MemberId = model.MemberId
             };
 
             System.Web.HttpContext.Current.Session["Profile"] = profile;
@@ -30,7 +30,7 @@ namespace Everlast.Controllers
             return System.Web.HttpContext.Current.Session["Profile"] as CurrentProfile;
         }
 
-        public int UpdateMemberSession(MemberViewModel model)
+        public int UpdateMemberSession(Member model)
         {
             this.DestroyMemberSession();
             this.CreateMemberSession(model);

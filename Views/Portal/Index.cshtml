@@ -1,11 +1,13 @@
-﻿
-@{
-    ViewBag.Title = "Index";
-}
+﻿<div class="v-cover-section">
+    <div class="row v-cover-section-content">
+        <div class="col-lg-12 text-center">
+            <h1 class="display-1">Members</h1>
+            <h2 class="v-header">Enjoy the benefits.</h2>
+        </div>
+        <div class="col-lg-12 text-center">
+            @Html.ActionLink("Register", "Register", "Portal", null, new { @class = "btn btn-lg btn-outline-dark" })
+            @Html.ActionLink("Login", "Login", "Portal", null, new { @class = "btn btn-lg btn-outline-dark" })
+        </div>
+    </div>
+</div>
 
-<h2>Portal/Index</h2>
-
-@*show option register or create new user*@
-
-@Html.ActionLink("Register", "Register", "Portal", null, new { @class = "btn btn-lg btn-primary" })
-@Html.ActionLink("Login", "Login", "Portal", null, new { @class = "btn btn-lg btn-primary" })

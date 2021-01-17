@@ -18,29 +18,39 @@ namespace Everlast.Controllers
 
         public ActionResult Login()
         {
-            return View(new MemberViewModel());
+            return View(new Member());
         }
 
         public ActionResult Register()
         {
-            return View(new MemberViewModel());
+            return View(new Member());
         }
 
         [HttpPost]
-        public ActionResult Login(MemberViewModel model)
+        public ActionResult Login(Member model)
         {
-            //int result = 0;
-            //result = new PortalCRUD().Login(model);
-            //if (result > 0)
-            //{
-            //    model = new MemberCRUD().Read(result);
-            //    new SessionsController().CreateMemberSession(model);
-            //    return View("Index", "Member", model);
-            //}
+            int sessionResult = 0;
 
-            new SessionsController().CreateMemberSession(model);
-            model.MemberId = 7;
-            return View("Index", "Member", model);
+            Member member = new PortalCRUD().Login(model);
+            member.IsAdmin = true;
+
+            if (member.MemberId > 0)
+            {
+                sessionResult = new SessionsController().CreateMemberSession(model);
+            }
+            else
+            {
+                return View(new Member());
+            }
+
+            if (sessionResult > 0)
+            {
+                return View("Profile", member);
+            }
+            else
+            {
+                return View(new Member());
+            }
         }
 
         public ActionResult Logout()
@@ -50,14 +60,43 @@ namespace Everlast.Controllers
         }
 
         [HttpPost]
-        public ActionResult Register(MemberViewModel model)
+        public ActionResult Register(Member model)
         {
-            //int result = 0;
-            //result = new PortalCRUD().Register(model);
-            // either send through email validation or create user on the spot
+            int sessionResult = 0;
+            bool usernameExists = false;
 
-            int sessionResult = new SessionsController().CreateMemberSession(model);
-            return View("Arrived", model);
+            PortalCRUD crud = new PortalCRUD();
+
+            usernameExists = crud.UsernameExists(model.Username);
+
+            if (usernameExists)
+            {
+                return View(new Member());
+            }
+            else
+            {
+                model = crud.Register(model);
+            }
+
+            if (model.MemberId > 0)
+            {
+                sessionResult = new SessionsController().CreateMemberSession(model);
+            }
+
+            if (sessionResult > 0)
+            {
+                model.IsAdmin = true;
+                return View("Profile", model);
+            }
+            else
+            {
+                return View(new Member());
+            }
+        }
+
+        public ActionResult Account(Member model)
+        {
+            return View(model);
         }
 
     }

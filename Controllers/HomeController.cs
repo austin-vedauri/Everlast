@@ -24,30 +24,31 @@ lips photo isn't really the logo but is stilled used
 
         public ActionResult About()
         {
-            ViewBag.Message = "Your application description page.";
-
             return View();
         }
 
         public ActionResult Contact()
         {
-            ViewBag.Message = "Your contact page.";
-
             return View();
         }
 
         public ActionResult Services()
         {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
+            // get all services
+            return View(new List<Models.Offer>());
         }
 
         public ActionResult Gallery()
         {
-            ViewBag.Message = "Your contact page.";
-
+            // get all gallery images
             return View();
+        }
+
+        public ActionResult Events()
+        {
+            // get all events
+
+            return View(new List<Models.Party>());
         }
     }
 }

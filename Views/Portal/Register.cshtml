@@ -1,38 +1,57 @@
-﻿@model Everlast.Models.MemberViewModel
-@{
-    ViewBag.Title = "Register";
-}
+﻿@model Everlast.Models.Member
 
-<h2>Register</h2>
+<div class="v-section">
+    <div class="row v-cover-section-content">
+        <div class="col-lg-12 text-center">
+            <h1 class="display-1">
+                Register!
+            </h1>
+            <h2 class="v-header">
+                Sign up with us.
+            </h2>
+            <blockquote class="blockquote">
+                <p class="mb-0">
+                    Fill out the form below to register now.
+                </p>
+            </blockquote>
+        </div>
+    </div>
+</div>
 
+<div class="v-section v-extend-section">
+    <div class="row v-cover-section-content">
+        <div class="col-lg-12">
+            @using (Html.BeginForm("Register", "Portal", FormMethod.Post, new { @class = "v-center" }))
+            {
+                <div class="form-group">
+                    @Html.LabelFor(m => m.FirstName, "First Name", null)
+                    @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control" })
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.LastName, "Last Name", null)
+                    @Html.TextBoxFor(m => m.LastName, new { @class = "form-control" })
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Phone, "Phone", null)
+                    @Html.TextBoxFor(m => m.Phone, new { @class = "form-control" })
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Email, "Email", null)
+                    @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Username, "Username", null)
+                    @Html.TextBoxFor(m => m.Username, new { @class = "form-control" })
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Password, "Password", null)
+                    @Html.TextBoxFor(m => m.Password, new { @class = "form-control" })
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-lg btn-outline-dark btn-block">Register</button>
+                </div>
+            }
 
-@using (Html.BeginForm("Register", "Portal", FormMethod.Post))
-{
-    @Html.LabelFor(m => m.FirstName, "First Name", null)
-    @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control" })
-    <br />
-    @Html.LabelFor(m => m.LastName, "Last Name", null)
-    @Html.TextBoxFor(m => m.LastName, new { @class = "form-control" })
-    <br />
-    @Html.LabelFor(m => m.PhoneNumber, "Phone", null)
-    @Html.TextBoxFor(m => m.PhoneNumber, new { @class = "form-control" })
-    <br />
-    @Html.LabelFor(m => m.EmailAddress, "Email", null)
-    @Html.TextBoxFor(m => m.EmailAddress, new { @class = "form-control" })
-    <br />
-    @Html.LabelFor(m => m.Username, "Username", null)
-    @Html.TextBoxFor(m => m.Username, new { @class = "form-control" })
-    <br />
-    @Html.LabelFor(m => m.Password, "Password", null)
-    @Html.TextBoxFor(m => m.Password, new { @class = "form-control" })
-
-    <button type="submit" class="btn btn-lg btn-primary">Register</button>
-}
-
-
-
-
-
-
-
-
+        </div>
+    </div>
+</div>

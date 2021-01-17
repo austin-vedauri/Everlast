@@ -1,5 +1,4 @@
-﻿using Everlast.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -12,7 +11,8 @@ namespace Everlast.Controllers
         // GET: Member
         public ActionResult Index()
         {
-            return View(new MemberViewModel());
+            // get all members
+            return View();
         }
     }
 }

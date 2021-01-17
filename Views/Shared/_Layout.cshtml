@@ -10,7 +10,7 @@
 <body>
 
 
-    <nav class="navbar navbar-expand-lg fixed-top navbar-light bg-light">
+    <nav class="navbar navbar-expand-lg fixed-top navbar-light bg-light v-custom-nav v-box-shadow">
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -23,14 +23,16 @@
                     @Html.ActionLink("About", "About", "Home", null, new { @class = "nav-link" })
                 </li>
                 <li class="nav-item v-nav-item">
+                    @Html.ActionLink("Services", "Services", "Home", null, new { @class = "nav-link" })
+                </li>
+                <li class="nav-item v-nav-item">
+                    @Html.ActionLink("Events", "Events", "Home", null, new { @class = "nav-link" })
+                </li>
+                <li class="nav-item v-nav-item">
                     @Html.ActionLink("Contact", "Contact", "Home", null, new { @class = "nav-link" })
                 </li>
-
                 <li class="nav-item v-nav-item">
                     @Html.ActionLink("Gallery", "Gallery", "Home", null, new { @class = "nav-link" })
-                </li>
-                <li class="nav-item v-nav-item">
-                    @Html.ActionLink("Schedule", "Index", "Schedule", null, new { @class = "nav-link" })
                 </li>
                 <li class="nav-item v-nav-item">
                     @if (System.Web.HttpContext.Current.Session["Profile"] != null)
@@ -39,7 +41,7 @@
                     }
                     else
                     {
-                        @Html.ActionLink("Login", "Index", "Portal", null, new { @class = "nav-link" })
+                        @Html.ActionLink("Members", "Index", "Portal", null, new { @class = "nav-link" })
                     }
                 </li>
             </ul>
@@ -56,5 +58,13 @@
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
+
+    <script type="text/javascript">
+            $(document).ready(function () {
+                console.log(location.pathname);
+                $('a[href$="' + location.pathname + '"]').addClass('active');
+            });
+    </script>
+
 </body>
 </html>

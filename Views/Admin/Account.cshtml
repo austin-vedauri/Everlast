@@ -1,0 +1,13 @@
+﻿
+@{
+    ViewBag.Title = "Account";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Admin/Account</h2>
+
+<p>this is where you'll manage your events, services, members and appointments</p>
+
+
+@Html.ActionLink("Manage Events", "Index", "Party", null, new { @class = "btn btn-lg btn-primary" })
+@Html.ActionLink("Manage Services", "Index", "Offer", null, new { @class = "btn btn-lg btn-primary" })

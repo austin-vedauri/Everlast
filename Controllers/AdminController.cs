@@ -9,25 +9,24 @@ namespace Everlast.Controllers
     public class AdminController : Controller
     {
         // GET: Admin
-        public ActionResult Index()
+        public ActionResult Login()
         {
             return View();
         }
 
-        public ActionResult Gallery()
+        public ActionResult Account()
         {
             return View();
         }
 
-        public ActionResult Services()
+        public ActionResult Offers()
         {
-            return View();
-        }
-        
-        public ActionResult Members()
-        {
-            return View();
+            return View("~/Offer/Index.cshtml", "Offer");
         }
 
+        public ActionResult Parties()
+        {
+            return View("~/Party/Index.cshtml", "Party");
+        }
     }
 }

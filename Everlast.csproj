@@ -125,21 +125,24 @@
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MemberController.cs" />
+    <Compile Include="Controllers\OfferController.cs" />
+    <Compile Include="Controllers\PartyController.cs" />
     <Compile Include="Controllers\PortalController.cs" />
-    <Compile Include="Controllers\ScheduleController.cs" />
     <Compile Include="Controllers\SessionsController.cs" />
     <Compile Include="CRUD\AdminCRUD.cs" />
-    <Compile Include="CRUD\MemberCRUD.cs" />
+    <Compile Include="CRUD\PartyCRUD.cs" />
     <Compile Include="CRUD\PortalCRUD.cs" />
-    <Compile Include="CRUD\ScheduleCRUD.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Interfaces\IBaseCrud.cs" />
+    <Compile Include="Models\Admin.cs" />
+    <Compile Include="Models\Appointment.cs" />
     <Compile Include="Models\CurrentProfile.cs" />
-    <Compile Include="Models\MemberViewModel.cs" />
-    <Compile Include="Models\ScheduleViewModel.cs" />
-    <Compile Include="Models\TimeSlotViewModel.cs" />
+    <Compile Include="Models\Member.cs" />
+    <Compile Include="Models\Offer.cs" />
+    <Compile Include="Models\Party.cs" />
+    <Compile Include="Models\Schedule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -161,6 +164,9 @@
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\bootstrap.min.css.map" />
     <None Include="Properties\PublishProfiles\FTPProfile.pubxml" />
+    <Content Include="img\ea_logo.jpg" />
+    <Content Include="img\g62.png" />
+    <Content Include="img\image102.png" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -272,16 +278,9 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Home\Services.cshtml" />
     <Content Include="Views\Home\Gallery.cshtml" />
-    <Content Include="Views\Admin\Index.cshtml" />
-    <Content Include="Views\Admin\Services.cshtml" />
-    <Content Include="Views\Admin\Gallery.cshtml" />
     <Content Include="Views\Portal\Login.cshtml" />
     <Content Include="Views\Portal\Register.cshtml" />
     <Content Include="Views\Portal\Index.cshtml" />
-    <Content Include="Views\Schedule\Index.cshtml" />
-    <Content Include="Views\Admin\Members.cshtml" />
-    <Content Include="Views\Member\Index.cshtml" />
-    <Content Include="Views\Admin\Schedule.cshtml" />
     <Content Include="Scripts\bootstrap.bundle.js.map" />
     <Content Include="Scripts\bootstrap.bundle.min.js.map" />
     <Content Include="Scripts\bootstrap.js.map" />
@@ -305,11 +304,22 @@
     <Content Include="Scripts\umd\popper.js.flow" />
     <Content Include="Scripts\umd\popper.js.map" />
     <Content Include="Scripts\umd\popper.min.js.map" />
-    <Content Include="Views\Portal\Arrived.cshtml" />
+    <Content Include="Views\Home\Events.cshtml" />
+    <Content Include="Views\Portal\Profile.cshtml" />
+    <Content Include="Views\Admin\Login.cshtml" />
+    <Content Include="Views\Admin\Account.cshtml" />
+    <Content Include="Views\Offer\Index.cshtml" />
+    <Content Include="Views\Offer\Create.cshtml" />
+    <Content Include="Views\Offer\Read.cshtml" />
+    <Content Include="Views\Offer\Update.cshtml" />
+    <Content Include="Views\Party\Index.cshtml" />
+    <Content Include="Views\Party\Read.cshtml" />
+    <Content Include="Views\Party\Create.cshtml" />
+    <Content Include="Views\Party\Update.cshtml" />
+    <Content Include="Views\Member\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Sessions\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
