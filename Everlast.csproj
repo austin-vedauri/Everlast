@@ -123,6 +123,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\AppointmentController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MemberController.cs" />
     <Compile Include="Controllers\OfferController.cs" />
@@ -130,6 +131,9 @@
     <Compile Include="Controllers\PortalController.cs" />
     <Compile Include="Controllers\SessionsController.cs" />
     <Compile Include="CRUD\AdminCRUD.cs" />
+    <Compile Include="CRUD\AppointmentCRUD.cs" />
+    <Compile Include="CRUD\MemberCRUD.cs" />
+    <Compile Include="CRUD\OfferCRUD.cs" />
     <Compile Include="CRUD\PartyCRUD.cs" />
     <Compile Include="CRUD\PortalCRUD.cs" />
     <Compile Include="Global.asax.cs">
@@ -163,7 +167,6 @@
     <Content Include="Content\bootstrap-reboot.min.css.map" />
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\bootstrap.min.css.map" />
-    <None Include="Properties\PublishProfiles\FTPProfile.pubxml" />
     <Content Include="img\ea_logo.jpg" />
     <Content Include="img\g62.png" />
     <Content Include="img\image102.png" />
@@ -175,6 +178,7 @@
     <Content Include="Scripts\esm\popper-utils.min.js" />
     <Content Include="Scripts\esm\popper.js" />
     <Content Include="Scripts\esm\popper.min.js" />
+    <None Include="Properties\PublishProfiles\FTPProfile.pubxml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -317,6 +321,8 @@
     <Content Include="Views\Party\Create.cshtml" />
     <Content Include="Views\Party\Update.cshtml" />
     <Content Include="Views\Member\Index.cshtml" />
+    <Content Include="Views\Appointment\ScheduleAppointment.cshtml" />
+    <Content Include="Views\Appointment\AppointmentConfirmation.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

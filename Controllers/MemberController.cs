@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Everlast.CRUD;
+using Everlast.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -9,10 +11,10 @@ namespace Everlast.Controllers
     public class MemberController : Controller
     {
         // GET: Member
-        public ActionResult Index()
+        public ActionResult Index(Guid memberGuid)
         {
-            // get all members
-            return View();
+            Member member = new MemberCRUD().Read(memberGuid);
+            return View(member);
         }
     }
 }

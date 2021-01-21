@@ -1,0 +1,135 @@
+﻿@model Everlast.Models.Appointment
+
+@{
+    ViewBag.Title = "AppointmentConfirmation";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Congratulations!</h2>
+
+<div>
+    <h4>Your Appointment Is Scheduled</h4>
+    <p>You're all set! We'll email you Pre/Post Care Instructions. Your appointment details are below.</p>
+    <br />
+    
+    <hr />
+
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.AppointmentGuid)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AppointmentGuid)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MemberId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MemberId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MemberGuid)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MemberGuid)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ServiceId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ServiceId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ServiceGuid)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ServiceGuid)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PartyId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PartyId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PartyGuid)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PartyGuid)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AppointmentStart)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AppointmentStart)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AppointmentEnd)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AppointmentEnd)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AddressLineOne)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AddressLineOne)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AddressLineTwo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AddressLineTwo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AddressCity)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AddressCity)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AddressState)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AddressState)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AddressPostal)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AddressPostal)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.AppointmentId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

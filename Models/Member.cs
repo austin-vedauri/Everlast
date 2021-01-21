@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Everlast.CRUD;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -17,5 +18,20 @@ namespace Everlast.Models
         public bool Verified { get; set; }
         public string Phone { get; set; }
         public bool IsAdmin { get; set; }
+
+        public Member Login(Member member)
+        {
+            return new PortalCRUD().Login(member);
+        }
+
+        public Member Register(Member member)
+        {
+            return new PortalCRUD().Register(member);
+        }
+
+        public bool UsernameExists()
+        {
+            return new PortalCRUD().UsernameExists(this.Username);
+        }
     }
 }

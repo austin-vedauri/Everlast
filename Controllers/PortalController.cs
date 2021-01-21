@@ -21,36 +21,54 @@ namespace Everlast.Controllers
             return View(new Member());
         }
 
+        [HttpPost]
+        public ActionResult Login(Member member)
+        {
+            int sessionResult = 0;
+
+            member = new PortalCRUD().Login(member);
+
+            if (member.MemberId > 0)
+            {
+                sessionResult = new SessionsController().CreateMemberSession(member);
+            }
+
+            if (sessionResult > 0)
+            {
+                return View("Index", "Member", member);
+            }
+
+            return View(new Member());
+        }
+
         public ActionResult Register()
         {
             return View(new Member());
         }
 
         [HttpPost]
-        public ActionResult Login(Member model)
+        public ActionResult Register(Member member)
         {
             int sessionResult = 0;
 
-            Member member = new PortalCRUD().Login(model);
-            member.IsAdmin = true;
+            bool usernameExists = new PortalCRUD().UsernameExists(member.Username);
+
+            if (!usernameExists)
+            {
+                member = new PortalCRUD().Register(member);
+            }
 
             if (member.MemberId > 0)
             {
-                sessionResult = new SessionsController().CreateMemberSession(model);
-            }
-            else
-            {
-                return View(new Member());
+                sessionResult = new SessionsController().CreateMemberSession(member);
             }
 
             if (sessionResult > 0)
             {
-                return View("Profile", member);
+                return RedirectToAction("Index", "Member", new { member = member.MemberGuid });
             }
-            else
-            {
-                return View(new Member());
-            }
+
+            return View(new Member());
         }
 
         public ActionResult Logout()
@@ -60,43 +78,32 @@ namespace Everlast.Controllers
         }
 
         [HttpPost]
-        public ActionResult Register(Member model)
-        {
-            int sessionResult = 0;
-            bool usernameExists = false;
-
-            PortalCRUD crud = new PortalCRUD();
-
-            usernameExists = crud.UsernameExists(model.Username);
-
-            if (usernameExists)
-            {
-                return View(new Member());
-            }
-            else
-            {
-                model = crud.Register(model);
-            }
-
-            if (model.MemberId > 0)
-            {
-                sessionResult = new SessionsController().CreateMemberSession(model);
-            }
-
-            if (sessionResult > 0)
-            {
-                model.IsAdmin = true;
-                return View("Profile", model);
-            }
-            else
-            {
-                return View(new Member());
-            }
-        }
-
         public ActionResult Account(Member model)
         {
             return View(model);
+        }
+
+        public ActionResult ResetPassword(Member model)
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult DoResetPassword(Member model)
+        {
+            return View("Profile", model);
+        }
+
+        [HttpPost]
+        public JsonResult Subscribe()
+        {
+            return Json("", JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public JsonResult Unsubscribe()
+        {
+            return Json("", JsonRequestBehavior.AllowGet);
         }
 
     }

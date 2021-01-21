@@ -16,17 +16,17 @@
     <div class="col-lg-4 col-md-4 col-sm-12">
         <div class="card v-card text-center">
             <div class="card-header">
-                Lip Flip
+                Demo Service
             </div>
             <div class="card-body">
-                <h5 class="card-title">$80</h5>
+                <h5 class="card-title">$1</h5>
                 <p class="card-text">
-                    Service Informational Text Here
+                    This is the demo service, check it out.
                 </p>
-                <a href="#" class="btn btn-primary">Book Now</a>
+                @Html.ActionLink("Book", "ScheduleAppointment", "Appointment", new { serviceGuid = Guid.NewGuid() }, new { @class = "btn btn-outline-dark btn-lg btn-block" })
             </div>
             <div class="card-footer text-muted">
-                15 Minutes
+                2 Minutes
             </div>
         </div>
     </div>

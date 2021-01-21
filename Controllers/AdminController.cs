@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Everlast.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -14,9 +15,15 @@ namespace Everlast.Controllers
             return View();
         }
 
-        public ActionResult Account()
+        [HttpPost]
+        public ActionResult Login(Admin model)
         {
-            return View();
+            return View("Account", model);
+        }
+
+        public ActionResult Account(Admin model)
+        {
+            return View("Account", model);
         }
 
         public ActionResult Offers()
