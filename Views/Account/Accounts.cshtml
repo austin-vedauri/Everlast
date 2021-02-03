@@ -1,0 +1,89 @@
+﻿@model IEnumerable<Everlast.Models.Account>
+
+@{
+    ViewBag.Title = "Accounts";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Accounts</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-sm btn-outline-dark" })
+</p>
+
+<table class="table table-striped table-bordered table-hover">
+    <thead class="thead-dark">
+        <tr>
+            <th>
+                Account Type
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Username)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LastName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Phone)
+            </th>
+            <th>
+                Options
+            </th>
+        </tr>
+    </thead>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @switch (item.AccountType)
+                {
+                    case (int)Everlast.enums.AccountTypes.Administrator:
+                        <div>Administrator</div>
+                        break;
+                    case (int)Everlast.enums.AccountTypes.Injector:
+                        <div>Injector</div>
+                        break;
+                    case (int)Everlast.enums.AccountTypes.Member:
+                        <div>Member</div>
+                        break;
+                    case (int)Everlast.enums.AccountTypes.Guest:
+                        <div>Guest</div>
+                        break;
+                    default:
+                        break;
+                }
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Username)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FirstName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LastName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Phone)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Update", new { accountGuid = item.AccountGuid }) |
+                @Html.ActionLink("Details", "Read", new { accountGuid = item.AccountGuid }) |
+                @if ((Guid)System.Web.HttpContext.Current.Session["AccountGuid"] != item.AccountGuid)
+                {
+                    @Html.ActionLink("Delete", "Delete", new { accountGuid = item.AccountGuid })
+                }
+            </td>
+        </tr>
+    }
+</table>
+
+

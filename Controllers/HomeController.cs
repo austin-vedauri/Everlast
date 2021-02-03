@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Everlast.Managers;
+using Everlast.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -6,17 +8,8 @@ using System.Web.Mvc;
 
 namespace Everlast.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : BaseController
     {
-
-        /*
-         * everlast:
-
-add services and cost, 
-requests appointments and consults,
-white bg with blue hair is actual logo
-lips photo isn't really the logo but is stilled used
-         */
         public ActionResult Index()
         {
             return View();
@@ -31,11 +24,16 @@ lips photo isn't really the logo but is stilled used
         {
             return View();
         }
+        
+        public ActionResult Members()
+        {
+            return View();
+        }
 
         public ActionResult Services()
         {
-            // get all services
-            return View(new List<Models.Offer>());
+            List<Service> models = new ServiceManager().GetServices();
+            return View(models);
         }
 
         public ActionResult Gallery()
@@ -46,9 +44,8 @@ lips photo isn't really the logo but is stilled used
 
         public ActionResult Events()
         {
-            // get all events
-
-            return View(new List<Models.Party>());
+            List<Party> models = new PartyManager().GetParties();
+            return View(models);
         }
     }
 }

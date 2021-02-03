@@ -11,14 +11,7 @@
     <h4>Party</h4>
     <hr />
     <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.PartyGuid)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.PartyGuid)
-        </dd>
-
+      
         <dt>
             @Html.DisplayNameFor(model => model.Title)
         </dt>
@@ -36,19 +29,11 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.EntryFee)
+            @Html.DisplayNameFor(model => model.Price)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.EntryFee)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Active)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Active)
+            @Html.DisplayFor(model => model.Price)
         </dd>
 
         <dt>
@@ -68,64 +53,41 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.PartyTimeSpan)
+            @Html.DisplayNameFor(model => model.Address)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.PartyTimeSpan)
+            @Html.DisplayFor(model => model.Address)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.AddressLineOne)
+            @Html.DisplayNameFor(model => model.City)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.AddressLineOne)
+            @Html.DisplayFor(model => model.City)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.AddressLineTwo)
+            @Html.DisplayNameFor(model => model.Postal)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.AddressLineTwo)
+            @Html.DisplayFor(model => model.Postal)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.AddressCity)
+            @Html.DisplayNameFor(model => model.State)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.AddressCity)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.AddressPostalCode)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.AddressPostalCode)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.AddressState)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.AddressState)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.PartyImagePath)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.PartyImagePath)
+            @Html.DisplayFor(model => model.State)
         </dd>
 
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.PartyId }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Edit", "Update", new { partyGuid = Model.PartyGuid }) |
+    @Html.ActionLink("Delete", "Delete", new { partyGuid = Model.PartyGuid }) |
+    @Html.ActionLink("Back to List", "Parties")
 </p>

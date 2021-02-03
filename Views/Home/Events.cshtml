@@ -9,52 +9,27 @@
     </div>
 </div>
 
-@foreach (Everlast.Models.Party companyEvent in Model)
+@foreach (Everlast.Models.Party item in Model)
 {
     <div class="row">
         <div class="col-lg-12">
             <div class="card v-card text-center">
                 <div class="card-header">
-                    @companyEvent.Title
+                    @item.Title
                 </div>
                 <div class="card-body">
                     <h5 class="card-title">
-                        @companyEvent.EntryFee
+                        @item.Price
                     </h5>
                     <p class="card-text">
-                        @companyEvent.Description
+                        @item.Description
                     </p>
-                    <a href="#" class="btn btn-primary">Join</a>
+                    @Html.ActionLink("Join", "Create", "Attendee", new { partyGuid = item.PartyGuid }, new { @class = "btn btn-outline-dark" })
                 </div>
                 <div class="card-footer text-muted">
-                    @companyEvent.PartyTimeSpan
+                    @item.PartyStart.ToShortDateString()
                 </div>
             </div>
         </div>
     </div>
 }
-
-
-@*Demo events below*@
-
-<div class="row">
-    <div class="col-lg-12">
-        <div class="card v-card text-center">
-            <div class="card-header">
-                Model Day
-            </div>
-            <div class="card-body">
-                <h5 class="card-title">
-                    Model Day by Everlasting Aesthetics
-                </h5>
-                <p class="card-text">
-                    $25 deposit will be required to hold your spot.
-                </p>
-                <a href="#" class="btn btn-primary">Join</a>
-            </div>
-            <div class="card-footer text-muted">
-                Sunday, January 24th
-            </div>
-        </div>
-    </div>
-</div>

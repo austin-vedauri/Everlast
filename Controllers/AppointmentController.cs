@@ -1,4 +1,5 @@
-﻿using Everlast.CRUD;
+﻿using Everlast.enums;
+using Everlast.Managers;
 using Everlast.Models;
 using System;
 using System.Collections.Generic;
@@ -8,29 +9,98 @@ using System.Web.Mvc;
 
 namespace Everlast.Controllers
 {
-    public class AppointmentController : Controller
+    public class AppointmentController : BaseController
     {
-        // GET: Appointment
-        public ActionResult Index()
+        public ActionResult Appointments()
         {
-            // get list of appointments
-            return View();
+            List<Appointment> models = new AppointmentManager().GetAppointments();
+            return View(models);
+        } 
+
+        public ActionResult Create()
+        {
+            Appointment model = new Appointment();
+
+            if (GetCurrentServiceGuid() != Guid.Empty)
+            {
+                model.ServiceGuid = GetCurrentServiceGuid();
+            }
+
+            model.ClientGuid = GetCurrentAccountGuid();
+
+            ViewBag.Message = "You're almost finished!";
+
+            return View(model);
         }
 
-        public ActionResult ScheduleAppointment(Guid serviceGuid)
+        // this gets called from the services page
+        public ActionResult VerifyAccountForAppointment(Guid serviceGuid)
         {
-            Appointment appointment = new Appointment
-            {
-                AppointmentForService = new OfferCRUD().Read(serviceGuid)
-            };
+            // set the current service guid
+            SetCurrentServiceGuid(serviceGuid);
 
-            return View(appointment);
+            // verify if the user is logged in or not
+            if (GetCurrentAccountGuid() != Guid.Empty)
+            {
+                // you are logged in, take them to create
+
+                return RedirectToAction("Create", "Appointment");
+
+            }
+            else
+            {
+                // you are not logged in, continue as guest or login?
+                return RedirectToAction("Options", "Account");
+            }
         }
 
         [HttpPost]
-        public ActionResult ScheduleAppointment(Appointment appointment)
+        public ActionResult Create(Appointment model)
         {
-            return View("AppointmentConfirmation", appointment);
+            if (ModelState.IsValid)
+            {
+                Service service = new ServiceManager().Read(model.ServiceGuid);
+
+                model.AppointmentEnd = model.AppointmentStart.AddHours(service.Hours).AddMinutes(service.Minutes);
+                model = new AppointmentManager().Create(model);
+                return RedirectToAction("Read", "Appointment", new { appointmentGuid = model.AppointmentGuid });
+            }
+            return View(model);
         }
+
+        public ActionResult Read(Guid appointmentGuid)
+        {
+            Appointment model = new AppointmentManager().Read(appointmentGuid);
+            return View(model);
+        }
+
+        public ActionResult Update(Guid appointmentGuid)
+        {
+            Appointment model = new AppointmentManager().Read(appointmentGuid);
+            return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult Update(Appointment model)
+        {
+            if (ModelState.IsValid)
+            {
+                int result = new AppointmentManager().Update(model);
+
+                if (result > 0)
+                {
+                    return RedirectToAction("Appointments");
+                }
+            }
+
+            return View(model);
+        }
+
+        public ActionResult Delete(Guid appointmentGuid)
+        {
+            new AppointmentManager().Delete(appointmentGuid);
+            return RedirectToAction("Appointments");
+        }
+
     }
 }

@@ -1,4 +1,4 @@
-﻿
+﻿@model List<Everlast.Models.Service>
 @{
     ViewBag.Title = "Services";
 }
@@ -13,256 +13,28 @@
 </div>
 
 <div class="row">
-    <div class="col-lg-4 col-md-4 col-sm-12">
-        <div class="card v-card text-center">
-            <div class="card-header">
-                Demo Service
-            </div>
-            <div class="card-body">
-                <h5 class="card-title">$1</h5>
-                <p class="card-text">
-                    This is the demo service, check it out.
-                </p>
-                @Html.ActionLink("Book", "ScheduleAppointment", "Appointment", new { serviceGuid = Guid.NewGuid() }, new { @class = "btn btn-outline-dark btn-lg btn-block" })
-            </div>
-            <div class="card-footer text-muted">
-                2 Minutes
-            </div>
-        </div>
-    </div>
 
-    <div class="col-lg-4 col-md-4 col-sm-12">
-        <div class="card v-card text-center">
-            <div class="card-header">
-                Platelet Rich Fibrin (PRF) add-on
-            </div>
-            <div class="card-body">
-                <h5 class="card-title">$150</h5>
-                <p class="card-text">
-                    Service Informational Text Here
-                </p>
-                <a href="#" class="btn btn-primary">Book Now</a>
-            </div>
-            <div class="card-footer text-muted">
-                30 Minutes
-            </div>
-        </div>
-    </div>
-
-    <div class="col-lg-4 col-md-4 col-sm-12">
-        <div class="card v-card text-center">
-            <div class="card-header">
-                Microneedling with Platelet Rich Fibrin
-            </div>
-            <div class="card-body">
-                <h5 class="card-title">$175</h5>
-                <p class="card-text">
-                    Service Informational Text Here
-                </p>
-                <a href="#" class="btn btn-primary">Book Now</a>
-            </div>
-            <div class="card-footer text-muted">
-                45 Minutes
+    @foreach (Everlast.Models.Service item in Model)
+    {
+        <div class="col-lg-4 col-md-4 col-sm-12">
+            <div class="card v-card text-center">
+                <div class="card-header">
+                    @item.Title
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">
+                        @item.Price
+                    </h5>
+                    <p class="card-text">
+                        @item.Description
+                    </p>
+                    @Html.ActionLink("Book", "VerifyAccountForAppointment", "Appointment", new { serviceGuid = item.ServiceGuid }, new { @class = "btn btn-outline-dark btn-lg btn-block" })
+                </div>
+                <div class="card-footer text-muted">
+                    @item.Hours Hours and @item.Minutes Minutes
+                </div>
             </div>
         </div>
-    </div>
-
-    <div class="col-lg-4 col-md-4 col-sm-12">
-        <div class="card v-card text-center">
-            <div class="card-header">
-                Filler (all other areas except lips)
-            </div>
-            <div class="card-body">
-                <h5 class="card-title">Price Varies</h5>
-                <p class="card-text">
-                    Service Informational Text Here
-                </p>
-                <a href="#" class="btn btn-primary">Book Now</a>
-            </div>
-            <div class="card-footer text-muted">
-                1 Hour
-            </div>
-        </div>
-    </div>
-
-    <div class="col-lg-4 col-md-4 col-sm-12">
-        <div class="card v-card text-center">
-            <div class="card-header">
-                Microdermabrasion
-            </div>
-            <div class="card-body">
-                <h5 class="card-title">$60</h5>
-                <p class="card-text">
-                    Service Informational Text Here
-                </p>
-                <a href="#" class="btn btn-primary">Book Now</a>
-            </div>
-            <div class="card-footer text-muted">
-                45 Minutes
-            </div>
-        </div>
-    </div>
-
-    <div class="col-lg-4 col-md-4 col-sm-12">
-        <div class="card v-card text-center">
-            <div class="card-header">
-                Dermaplaning
-            </div>
-            <div class="card-body">
-                <h5 class="card-title">$65</h5>
-                <p class="card-text">
-                    Service Informational Text Here
-                </p>
-                <a href="#" class="btn btn-primary">Book Now</a>
-            </div>
-            <div class="card-footer text-muted">
-                45 Minutes
-            </div>
-        </div>
-    </div>
-
-    <div class="col-lg-4 col-md-4 col-sm-12">
-        <div class="card v-card text-center">
-            <div class="card-header">
-                Chemical Peel - Medium Depth
-            </div>
-            <div class="card-body">
-                <h5 class="card-title">$150</h5>
-                <p class="card-text">
-                    Service Informational Text Here
-                </p>
-                <a href="#" class="btn btn-primary">Book Now</a>
-            </div>
-            <div class="card-footer text-muted">
-                30 Minutes
-            </div>
-        </div>
-    </div>
-
-    <div class="col-lg-4 col-md-4 col-sm-12">
-        <div class="card v-card text-center">
-            <div class="card-header">
-                Lip Flip Top/Bottom
-            </div>
-            <div class="card-body">
-                <h5 class="card-title">$100</h5>
-                <p class="card-text">
-                    Service Informational Text Here
-                </p>
-                <a href="#" class="btn btn-primary">Book Now</a>
-            </div>
-            <div class="card-footer text-muted">
-                15 Minutes
-            </div>
-        </div>
-    </div>
-
-    <div class="col-lg-4 col-md-4 col-sm-12">
-        <div class="card v-card text-center">
-            <div class="card-header">
-                Add on Collagen Sheet Mask
-            </div>
-            <div class="card-body">
-                <h5 class="card-title">$10</h5>
-                <p class="card-text">
-                    Service Informational Text Here
-                </p>
-                <a href="#" class="btn btn-primary">Book Now</a>
-            </div>
-            <div class="card-footer text-muted">
-                15 Minutes +
-            </div>
-        </div>
-    </div>
-
-    <div class="col-lg-4 col-md-4 col-sm-12">
-        <div class="card v-card text-center">
-            <div class="card-header">
-                Add on Hydrojelly Mask
-            </div>
-            <div class="card-body">
-                <h5 class="card-title">$10</h5>
-                <p class="card-text">
-                    Service Informational Text Here
-                </p>
-                <a href="#" class="btn btn-primary">Book Now</a>
-            </div>
-            <div class="card-footer text-muted">
-                15 Minutes +
-            </div>
-        </div>
-    </div>
-
-    <div class="col-lg-4 col-md-4 col-sm-12">
-        <div class="card v-card text-center">
-            <div class="card-header">
-                Lip Filler Only
-            </div>
-            <div class="card-body">
-                <h5 class="card-title">Price Varies</h5>
-                <p class="card-text">
-                    Service Informational Text Here
-                </p>
-                <a href="#" class="btn btn-primary">Book Now</a>
-            </div>
-            <div class="card-footer text-muted">
-                45 Minutes +
-            </div>
-        </div>
-    </div>
-
-    <div class="col-lg-4 col-md-4 col-sm-12">
-        <div class="card v-card text-center">
-            <div class="card-header">
-                Microneedling
-            </div>
-            <div class="card-body">
-                <h5 class="card-title">$115</h5>
-                <p class="card-text">
-                    Includes post treatment collagen mask
-                </p>
-                <a href="#" class="btn btn-primary">Book Now</a>
-            </div>
-            <div class="card-footer text-muted">
-                45 Minutes +
-            </div>
-        </div>
-    </div>
-
-    <div class="col-lg-4 col-md-4 col-sm-12">
-        <div class="card v-card text-center">
-            <div class="card-header">
-                Jeaveau
-            </div>
-            <div class="card-body">
-                <h5 class="card-title">$9</h5>
-                <p class="card-text">
-                    Service Informational Text Here
-                </p>
-                <a href="#" class="btn btn-primary">Book Now</a>
-            </div>
-            <div class="card-footer text-muted">
-                30 Minutes +
-            </div>
-        </div>
-    </div>
-
-    <div class="col-lg-4 col-md-4 col-sm-12">
-        <div class="card v-card text-center">
-            <div class="card-header">
-                Xeomin
-            </div>
-            <div class="card-body">
-                <h5 class="card-title">$10</h5>
-                <p class="card-text">
-                    Service Informational Text Here
-                </p>
-                <a href="#" class="btn btn-primary">Book Now</a>
-            </div>
-            <div class="card-footer text-muted">
-                30 Minutes +
-            </div>
-        </div>
-    </div>
+    }
 
 </div>

@@ -118,6 +118,10 @@ textarea {
     min-height: 150px;
 }
 
+.v-group-text {
+    min-width: 100px;
+}
+
 .v-navbar {
     margin: 0;
     width: 100%;

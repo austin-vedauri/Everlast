@@ -1,0 +1,61 @@
+﻿@{
+    ViewBag.Title = "Options";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Options</h2>
+
+<div class="jumbotron">
+
+    <div class="row">
+        <div class="col-lg-4 col-md-4 col-sm-12">
+            <div class="card v-card text-center">
+                <div class="card-header">
+                    Membership
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">
+                        Become A Member!
+                    </h5>
+                    <p class="card-text">
+                        Members receive special treatment...
+                    </p>
+                    @Html.ActionLink("Register", "Register", "Account", null, new { @class = "nav-link" })
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-12">
+            <div class="card v-card text-center">
+                <div class="card-header">
+                    Login
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">
+                        Already a member?
+                    </h5>
+                    <p class="card-text">
+                        You can log in to continue...
+                    </p>
+                    @Html.ActionLink("Login", "Login", "Account", null, new { @class = "nav-link" })
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-12">
+            <div class="card v-card text-center">
+                <div class="card-header">
+                    Guest
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">
+                        Continue as Guest
+                    </h5>
+                    <p class="card-text">
+                        Book your appointment as a guest.
+                    </p>
+                    @Html.ActionLink("Guest", "RegisterGuest", "Account", null, new { @class = "nav-link" })
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

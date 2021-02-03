@@ -1,0 +1,75 @@
+﻿@model IEnumerable<Everlast.Models.Appointment>
+
+@{
+    ViewBag.Title = "Appointments";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Appointments</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table table-striped table-bordered table-hover">
+    <thead class="thead-dark">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.AppointmentGuid)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ClientGuid)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.InjectorGuid)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ServiceGuid)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PeriodGuid)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AppointmentStart)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AppointmentEnd)
+            </th>
+            <th>
+                Options
+            </th>
+        </tr>
+        </thead>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AppointmentGuid)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ClientGuid)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.InjectorGuid)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ServiceGuid)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PeriodGuid)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AppointmentStart)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AppointmentEnd)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Update", new { appointmentGuid = item.AppointmentGuid }) |
+                    @Html.ActionLink("Details", "Read", new { appointmentGuid = item.AppointmentGuid }) |
+                    @Html.ActionLink("Delete", "Delete", new { appointmentGuid = item.AppointmentGuid })
+                </td>
+            </tr>
+        }
+
+</table>

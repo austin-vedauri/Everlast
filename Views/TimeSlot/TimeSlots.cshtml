@@ -1,0 +1,63 @@
+﻿@model IEnumerable<Everlast.Models.TimeSlot>
+
+@{
+    ViewBag.Title = "TimeSlots";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>TimeSlots</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table table-striped table-bordered table-hover">
+    <thead class="thead-dark">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.TimeSlotGuid)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AccountGuid)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TimeSlotStart)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TimeSlotEnd)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Available)
+            </th>
+            <th>
+                Options
+            </th>
+        </tr>
+        </thead>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TimeSlotGuid)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AccountGuid)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TimeSlotStart)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TimeSlotEnd)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Available)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Update", new { timeSlotGuid = item.TimeSlotGuid, accountGuid = item.AccountGuid }) |
+                    @Html.ActionLink("Details", "Read", new { timeSlotGuid = item.TimeSlotGuid, accountGuid = item.AccountGuid }) |
+                    @Html.ActionLink("Delete", "Delete", new { timeSlotGuid = item.TimeSlotGuid, accountGuid = item.AccountGuid })
+                </td>
+            </tr>
+        }
+
+</table>

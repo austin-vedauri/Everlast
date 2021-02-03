@@ -1,0 +1,95 @@
+﻿@model Everlast.Models.Account
+
+@{
+    ViewBag.Title = "Read";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Read</h2>
+
+@Html.HiddenFor(model => model.AccountGuid)
+
+<div>
+    <h4>Account</h4>
+    <hr />
+    <dl class="dl-horizontal">
+       
+        <dt>
+            @Html.DisplayNameFor(model => model.AccountType)
+        </dt>
+
+        <dd>
+            @switch (Model.AccountType)
+            {
+                case (int)Everlast.enums.AccountTypes.Administrator:
+                    <div>Administrator</div>
+                    break;
+                case (int)Everlast.enums.AccountTypes.Injector:
+                    <div>Injector</div>
+                    break;
+                case (int)Everlast.enums.AccountTypes.Member:
+                    <div>Member</div>
+                    break;
+                case (int)Everlast.enums.AccountTypes.Guest:
+                    <div>Guest</div>
+                    break;
+                default:
+                    <div>No Account Type Found</div>
+                    break;
+            }
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Username)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Username)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Password)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Password)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FirstName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FirstName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LastName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LastName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Phone)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Phone)
+        </dd>
+
+    </dl>
+</div>
+
+<p>
+    @Html.ActionLink("Edit", "Update", new { accountGuid = Model.AccountGuid }) |
+</p>

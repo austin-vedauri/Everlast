@@ -1,0 +1,20 @@
+﻿
+@{
+    ViewBag.Title = "Members";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="jumbotron">
+    <div class="row">
+        <div class="col-lg-12">
+            <h2>Members</h2>
+            <p>Welcome to the Members Page.</p>
+        </div>
+        <div class="col-lg-12 mb-2">
+            @Html.ActionLink("Register", "Register", "Account", null, new { @class = "btn btn-lg btn-outline-dark" })
+        </div>
+        <div class="col-lg-12 mb-2">
+            @Html.ActionLink("Login", "Login", "Account", null, new { @class = "btn btn-lg btn-outline-dark" })
+        </div>
+    </div>
+</div>

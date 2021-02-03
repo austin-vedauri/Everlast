@@ -1,0 +1,58 @@
+﻿@model IEnumerable<Everlast.Models.TimeSlot>
+
+@{
+    ViewBag.Title = "TimeSlotsForAccount";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>TimeSlotsForAccount</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.TimeSlotGuid)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AccountGuid)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TimeSlotStart)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TimeSlotEnd)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Available)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.TimeSlotGuid)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AccountGuid)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TimeSlotStart)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TimeSlotEnd)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Available)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Update", new { timeSlotGuid = item.TimeSlotGuid, accountGuid = item.AccountGuid }) |
+            @Html.ActionLink("Details", "Read", new { timeSlotGuid = item.TimeSlotGuid, accountGuid = item.AccountGuid }) |
+            @Html.ActionLink("Delete", "Delete", new { timeSlotGuid = item.TimeSlotGuid, accountGuid = item.AccountGuid })
+        </td>
+    </tr>
+}
+
+</table>

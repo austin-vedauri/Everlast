@@ -1,4 +1,5 @@
-﻿using Everlast.CRUD;
+﻿using Everlast.Managers;
+using Everlast.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,32 +8,60 @@ using System.Web.Mvc;
 
 namespace Everlast.Controllers
 {
-    public class PartyController : Controller
+    public class PartyController : BaseController
     {
-        // GET: Party
-        public ActionResult Index()
+        public ActionResult Parties()
         {
-            return View(new PartyCRUD().GetParties());
+            List<Party> parties = new PartyManager().GetParties();
+            return View(parties);
         }
 
         public ActionResult Create()
         {
-            return View(new Models.Party());
+            return View(new Party());
         }
 
-        public ActionResult Read()
+        [HttpPost]
+        public ActionResult Create(Party model)
         {
-            return View(new Models.Party());
+            if (ModelState.IsValid)
+            {
+                model = new PartyManager().Create(model);
+                return RedirectToAction("Parties");
+            }
+            return View(new Party());
         }
 
-        public ActionResult Update()
+        public ActionResult Read(Guid partyGuid)
         {
-            return View(new Models.Party());
+            Party model = new PartyManager().Read(partyGuid);
+            return View(model);
         }
 
-        public ActionResult Delete()
+        [HttpPost]
+        public ActionResult Update(Guid partyGuid)
         {
-            return View(new Models.Party());
+            Party model = new PartyManager().Read(partyGuid);
+            return View(model);
         }
+        
+        [HttpPost]
+        public ActionResult Update(Party model)
+        {
+            if (ModelState.IsValid)
+            {
+                model = new PartyManager().Update(model);
+                return RedirectToAction("Parties");
+            }
+
+            return View(model);
+        }
+
+        public ActionResult Delete(Guid partyGuid)
+        {
+            new PartyManager().Destroy(partyGuid);
+            return RedirectToAction("Parties");
+        }
+
     }
 }

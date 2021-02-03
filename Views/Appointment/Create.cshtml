@@ -1,0 +1,104 @@
+﻿@model Everlast.Models.Appointment
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Create</h2>
+
+@using (Html.BeginForm("Create", "Appointment", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(model => model.AppointmentGuid)
+    @Html.HiddenFor(model => model.ClientGuid)
+    @Html.HiddenFor(model => model.PeriodGuid)
+
+<div class="form-horizontal">
+    <h4>Appointment</h4>
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.InjectorGuid, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownListFor(model => model.InjectorGuid, new SelectList(string.Empty, "Value", "Text"), new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.InjectorGuid, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.ServiceGuid, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownListFor(model => model.ServiceGuid, new SelectList(string.Empty, "Value", "Text"), new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.ServiceGuid, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.AppointmentStart, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownListFor(model => model.AppointmentStart, new SelectList(string.Empty, "Value", "Text"), new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.AppointmentStart, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            @*<input id="btnConfirm" type="button" value="Confirm" class="btn btn-default" />*@
+            <input id="btnSubmit" type="submit" value="Create" class="btn btn-default" />
+        </div>
+    </div>
+</div>
+}
+
+@section scripts {
+
+    <script type="text/javascript">
+
+        // onLoad
+        $(document).ready(function () {
+            let injectorLoaded = LoadInjectors();
+            let serviceLoaded = LoadServices();
+            let appointmentLoaded = LoadAvailability();
+        });
+
+        // events
+        $("#InjectorGuid").change(() => onChangeInjector());
+        $("#ServiceGuid").change(() => onChangeService());
+
+        // functions
+        function onChangeInjector() {
+            LoadAvailability();
+        }
+
+        function onChangeService() {
+            LoadAvailability();
+        }
+
+        function LoadInjectors() {
+            Everlast.Request.DropData('@Url.Action("GetAvailableInjectors", "Helper")', "InjectorGuid");
+        }
+
+        function LoadServices() {
+            Everlast.Request.DropData('@Url.Action("GetAvailableServices", "Helper")', "ServiceGuid");
+        }
+
+        function LoadAvailability() {
+            let accountGuid = document.getElementById("InjectorGuid");
+            let serviceGuid = document.getElementById("ServiceGuid");
+            if (accountGuid.value == "" ||
+                serviceGuid.value == "" ||
+                accountGuid.value == "00000000-0000-0000-0000-000000000000" ||
+                serviceGuid.value == "00000000-0000-0000-0000-000000000000") {
+                return;
+            } else {
+                debugger
+                let data = { "accountGuid": accountGuid.value, "serviceGuid": serviceGuid.value };
+                Everlast.Request.DropData('@Url.Action("GetAvailableAppointmentsFromInjector", "Helper")', "AppointmentStart", data);
+            }
+        }
+
+    </script>
+
+}

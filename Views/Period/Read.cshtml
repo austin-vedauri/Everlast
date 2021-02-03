@@ -1,0 +1,51 @@
+﻿@model Everlast.Models.Period
+
+@{
+    ViewBag.Title = "Read";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Read</h2>
+
+<div>
+    <h4>Period</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.PeriodGuid)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PeriodGuid)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AccountGuid)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AccountGuid)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Start)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Start)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Stop)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Stop)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
