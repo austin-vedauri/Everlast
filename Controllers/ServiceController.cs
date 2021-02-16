@@ -40,7 +40,6 @@ namespace Everlast.Controllers
             return View(model);
         }
 
-        [HttpPost]
         public ActionResult Update(Guid serviceGuid)
         {
             Service model = new ServiceManager().Read(serviceGuid);
@@ -62,7 +61,7 @@ namespace Everlast.Controllers
         public ActionResult Delete(Guid serviceGuid)
         {
             new ServiceManager().Delete(serviceGuid);
-            return RedirectToAction("Parties");
+            return RedirectToAction("Services");
         }
     }
 }

@@ -47,5 +47,10 @@ namespace Everlast.Controllers
             List<Party> models = new PartyManager().GetParties();
             return View(models);
         }
+
+        public ActionResult Developer()
+        {
+            return View();
+        }
     }
 }

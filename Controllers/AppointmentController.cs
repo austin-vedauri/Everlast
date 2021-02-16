@@ -1,6 +1,7 @@
 ﻿using Everlast.enums;
 using Everlast.Managers;
 using Everlast.Models;
+using Everlast.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,9 +14,9 @@ namespace Everlast.Controllers
     {
         public ActionResult Appointments()
         {
-            List<Appointment> models = new AppointmentManager().GetAppointments();
+            List<AppointmentViewModel> models = new AppointmentManager().GetScheduledAppointmentsForView();
             return View(models);
-        } 
+        }
 
         public ActionResult Create()
         {
@@ -36,6 +37,7 @@ namespace Everlast.Controllers
         // this gets called from the services page
         public ActionResult VerifyAccountForAppointment(Guid serviceGuid)
         {
+
             // set the current service guid
             SetCurrentServiceGuid(serviceGuid);
 
@@ -43,7 +45,6 @@ namespace Everlast.Controllers
             if (GetCurrentAccountGuid() != Guid.Empty)
             {
                 // you are logged in, take them to create
-
                 return RedirectToAction("Create", "Appointment");
 
             }
@@ -70,7 +71,7 @@ namespace Everlast.Controllers
 
         public ActionResult Read(Guid appointmentGuid)
         {
-            Appointment model = new AppointmentManager().Read(appointmentGuid);
+            AppointmentViewModel model = new AppointmentManager().GetScheduledAppointmentByAppointmentGuidForView(appointmentGuid);
             return View(model);
         }
 

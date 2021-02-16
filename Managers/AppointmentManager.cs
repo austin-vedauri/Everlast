@@ -5,6 +5,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using Everlast.Models;
+using Everlast.ViewModels;
 
 namespace Everlast.Managers
 {
@@ -16,8 +17,8 @@ namespace Everlast.Managers
         {
             Guid appointmentGuid = Guid.NewGuid();
 
-            string textCommand = "INSERT INTO tbl_Appointments " + 
-                "(AppointmentGuid, ClientGuid, InjectorGuid, ServiceGuid, PeriodGuid, AppointmentStart, AppointmentEnd)" + 
+            string textCommand = "INSERT INTO tbl_Appointments " +
+                "(AppointmentGuid, ClientGuid, InjectorGuid, ServiceGuid, PeriodGuid, AppointmentStart, AppointmentEnd)" +
                 " OUTPUT INSERTED.AppointmentId VALUES " +
                 "(@AppointmentGuid, @ClientGuid, @InjectorGuid, @ServiceGuid, @PeriodGuid, @AppointmentStart, @AppointmentEnd)";
 
@@ -37,9 +38,9 @@ namespace Everlast.Managers
                 connection.Open();
 
                 command.ExecuteNonQuery();
-                
+
                 connection.Close();
-                
+
             }
             model.AppointmentGuid = appointmentGuid;
             return model;
@@ -126,6 +127,74 @@ namespace Everlast.Managers
             return result;
         }
 
+        public List<AppointmentViewModel> GetScheduledAppointmentsForView()
+        {
+            List<AppointmentViewModel> models = new List<AppointmentViewModel>();
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                SqlCommand command = new SqlCommand("proc_GetScheduledAppointments", connection)
+                {
+                    CommandType = System.Data.CommandType.StoredProcedure
+                };
+
+                connection.Open();
+
+                using (SqlDataReader reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        AppointmentViewModel model = new AppointmentViewModel
+                        {
+                            AppointmentGuid = Guid.Parse(reader["AppointmentGuid"].ToString()),
+                            ClientName = reader["ClientName"].ToString(),
+                            InjectorName = reader["InjectorName"].ToString(),
+                            Title = reader["Title"].ToString(),
+                            Price = Convert.ToDecimal(reader["Price"].ToString()),
+                            AppointmentStart = Convert.ToDateTime(reader["AppointmentStart"].ToString()),
+                            AppointmentEnd = Convert.ToDateTime(reader["AppointmentEnd"].ToString()),
+                        };
+                        models.Add(model);
+                    }
+                }
+            }
+            return models;
+        }
+
+        public AppointmentViewModel GetScheduledAppointmentByAppointmentGuidForView(Guid appointmentGuid)
+        {
+            AppointmentViewModel model = new AppointmentViewModel();
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                SqlCommand command = new SqlCommand("proc_GetScheduledAppointmentByAppointmentGuid", connection)
+                {
+                    CommandType = System.Data.CommandType.StoredProcedure
+                };
+
+                command.Parameters.AddWithValue("@AppointmentGuid", appointmentGuid);
+
+                connection.Open();
+
+                using (SqlDataReader reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+
+                        model.AppointmentGuid = Guid.Parse(reader["AppointmentGuid"].ToString());
+                        model.ClientName = reader["ClientName"].ToString();
+                        model.InjectorName = reader["InjectorName"].ToString();
+                        model.Title = reader["Title"].ToString();
+                        model.Price = Convert.ToDecimal(reader["Price"].ToString());
+                        model.AppointmentStart = Convert.ToDateTime(reader["AppointmentStart"].ToString());
+                        model.AppointmentEnd = Convert.ToDateTime(reader["AppointmentEnd"].ToString());
+
+                    }
+                }
+            }
+            return model;
+        }
+
         public List<Appointment> GetAppointments()
         {
             List<Appointment> appointments = new List<Appointment>();
@@ -152,7 +221,7 @@ namespace Everlast.Managers
 
                             AppointmentStart = Convert.ToDateTime(reader["AppointmentStart"].ToString()),
                             AppointmentEnd = Convert.ToDateTime(reader["AppointmentEnd"].ToString()),
-                    };
+                        };
                         appointments.Add(appointment);
                     }
                 }
@@ -204,7 +273,7 @@ namespace Everlast.Managers
 
         public List<Appointment> GetAppointmentsByPeriodGuidForToday(Guid periodGuid)
         {
-            List<Appointment> appointments = GetAppointments().Where(m => 
+            List<Appointment> appointments = GetAppointments().Where(m =>
             m.PeriodGuid == periodGuid &&
             m.AppointmentStart.Year == DateTime.Now.Year &&
             m.AppointmentStart.DayOfYear == DateTime.Now.DayOfYear
@@ -232,7 +301,7 @@ namespace Everlast.Managers
             // get appointments for the injector
             List<Appointment> models = GetAppointmentsByInjectorGuid(injectorGuid);
             // get the appointments specifically for today
-            models = models.Where(model => 
+            models = models.Where(model =>
             model.AppointmentStart.Year == date.Year &&
             model.AppointmentStart.DayOfYear == date.DayOfYear
             ).ToList();

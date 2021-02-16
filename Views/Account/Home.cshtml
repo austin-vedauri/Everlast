@@ -8,99 +8,54 @@
 @Html.HiddenFor(model => model.AccountGuid)
 @Html.HiddenFor(model => model.Password)
 <br />
-<div class="container">
+<div class="container-fluid">
     <div class="row">
-        <div class="col-lg-12">
-            <h2>Dashboard</h2>
+        <div class="col-lg-3">
+            <div class="jumbotron jumbotron-slim">
+                <ul>
+                    @if ((int)System.Web.HttpContext.Current.Session["AccountType"] == (int)Everlast.enums.AccountTypes.Administrator)
+                    {
+                        <li class="v-side-nav-item">
+                            @Html.ActionLink("Accounts", "Accounts", "Account", null, new { @class = "nav-link" })
+                        </li>
+                        <li class="v-side-nav-item">
+                            @Html.ActionLink("Appointments", "Appointments", "Appointment", null, new { @class = "nav-link" })
+                        </li>
+                        <li class="v-side-nav-item">
+                            @Html.ActionLink("Services", "Services", "Service", null, new { @class = "nav-link" })
+                        </li>
+                        <li class="v-side-nav-item">
+                            @Html.ActionLink("Events", "Parties", "Party", null, new { @class = "nav-link" })
+                        </li>
+                        <li class="v-side-nav-item">
+                            @Html.ActionLink("Availability", "Periods", "Period", null, new { @class = "nav-link" })
+                        </li>
+                        <li class="v-side-nav-item">
+                            @Html.ActionLink("Treatments", "Treatments", "Treatment", null, new { @class = "nav-link" })
+                        </li>
+                    }
+                    <li class="v-side-nav-item">
+                        @Html.ActionLink("Logout", "Logout", "Account", null, new { @class = "nav-link" })
+                    </li>
+                    <li class="v-side-nav-item">
+                        @Html.ActionLink("Edit Account", "Update", new { accountGuid = Model.AccountGuid }, new { @class = "nav-link" })
+                    </li>
+                </ul>
+            </div>
         </div>
-        <div class="col-lg-12">
-            <h4>Welcome, @Model.FirstName</h4>
+        <div class="col-lg-9">
+            <div class="jumbotron jumbotron-slim">
+                <p class="blockquote">
+                    This is your Dashboard.
+                    <br />
+                    Members, Injectors and Admins have access to this page.
+                    <br />
+                    The quick menu displays certain items based on the account type logged in.
+                </p>
+            </div>
         </div>
     </div>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="navbar-brand">Dashboard</div>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav v-navbar">
-                @if ((int)System.Web.HttpContext.Current.Session["AccountType"] == (int)Everlast.enums.AccountTypes.Administrator)
-                {
-                    <li class="nav-item v-nav-item">
-                        @Html.ActionLink("Accounts", "Accounts", "Account", null, new { @class = "nav-link" })
-                    </li>
-                    <li class="nav-item v-nav-item">
-                        @Html.ActionLink("Appointments", "Appointments", "Appointment", null, new { @class = "nav-link" })
-                    </li>
-                    <li class="nav-item v-nav-item">
-                        @Html.ActionLink("Services", "Services", "Service", null, new { @class = "nav-link" })
-                    </li>
-                    <li class="nav-item v-nav-item">
-                        @Html.ActionLink("Events", "Parties", "Party", null, new { @class = "nav-link" })
-                    </li>
-                    <li class="nav-item v-nav-item">
-                        @Html.ActionLink("Availability", "Periods", "Period", null, new { @class = "nav-link" })
 
-                    </li>
-                }
-                <li class="nav-item v-nav-item">
-                    @Html.ActionLink("Logout", "Logout", "Account", null, new { @class = "nav-link" })
-                </li>
-                <li class="nav-item v-nav-item">
-                    @Html.ActionLink("Edit Account", "Update", new { accountGuid = Model.AccountGuid }, new { @class = "nav-link" })
-                </li>
-            </ul>
-        </div>
-    </nav>
-    <div class="jumbotron">
-        <ul class="list-group list-group-flush">
-            <li class="list-group-item">
-                <b>Account Type:</b>
-                @switch (Model.AccountType)
-                {
-                    case (int)Everlast.enums.AccountTypes.Administrator:
-                        <div>Administrator</div>
-                        break;
-                    case (int)Everlast.enums.AccountTypes.Injector:
-                        <div>Injector</div>
-                        break;
-                    case (int)Everlast.enums.AccountTypes.Member:
-                        <div>Member</div>
-                        break;
-                    case (int)Everlast.enums.AccountTypes.Guest:
-                        <div>Guest</div>
-                        break;
-                    default:
-                        break;
-                }
-
-            </li>
-            <li class="list-group-item">
-                <b>Username:</b>
-                @Html.DisplayFor(model => model.Username)
-            </li>
-            <li class="list-group-item">
-                <b>Password:</b>
-                @Html.DisplayFor(model => model.Password)
-            </li>
-            <li class="list-group-item">
-                <b>First Name:</b>
-                @Html.DisplayFor(model => model.FirstName)
-            </li>
-            <li class="list-group-item">
-                <b>Last Name:</b>
-                @Html.DisplayFor(model => model.LastName)
-            </li>
-            <li class="list-group-item">
-                <b>Email Address:</b>
-                @Html.DisplayFor(model => model.Email)
-            </li>
-            <li class="list-group-item">
-                <b>Phone Number:</b>
-                @Html.DisplayFor(model => model.Phone)
-            </li>
-        </ul>
-    </div>
 </div>
 
 

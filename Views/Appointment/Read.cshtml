@@ -1,4 +1,4 @@
-﻿@model Everlast.Models.Appointment
+﻿@model Everlast.ViewModels.AppointmentViewModel
 
 @{
     ViewBag.Title = "Read";
@@ -7,68 +7,60 @@
 
 <h2>Read</h2>
 
-<div>
-    <h4>Appointment</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.AppointmentGuid)
-        </dt>
+@Html.HiddenFor(model => model.AppointmentGuid)
 
-        <dd>
-            @Html.DisplayFor(model => model.AppointmentGuid)
-        </dd>
+<div class="jumbotron">
+    <div class="row">
+        <div class="col-lg-12">
+            <h4>Appointment</h4>
+            <hr />
+        </div>
+        <div class="col-lg-12">
+            <dl class="dl-horizontal">
+                <dt>
+                    Appointment:
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Title) - $@Html.DisplayFor(model => model.Price)
+                </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.ClientGuid)
-        </dt>
+                <dt>
+                    Appointment Start:
+                </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.ClientGuid)
-        </dd>
+                <dd>
+                    @Html.DisplayFor(model => model.AppointmentStart)
+                </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.InjectorGuid)
-        </dt>
+                <dt>
+                    Appointment End:
+                </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.InjectorGuid)
-        </dd>
+                <dd>
+                    @Html.DisplayFor(model => model.AppointmentEnd)
+                </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.ServiceGuid)
-        </dt>
+                <dt>
+                    Client:
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.ClientName)
+                </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.ServiceGuid)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.PeriodGuid)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.PeriodGuid)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.AppointmentStart)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.AppointmentStart)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.AppointmentEnd)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.AppointmentEnd)
-        </dd>
-
-    </dl>
+                <dt>
+                    Injector:
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.InjectorName)
+                </dd>
+            </dl>
+        </div>
+        <div class="col-lg-12">
+            <div id="pvTreatment">
+                @{
+                    Html.RenderAction("_Treatment", "Treatment", new { serviceGuid = Model.ServiceGuid });
+                }
+            </div>
+        </div>
+    </div>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Update", new { /* id = Model.PrimaryKey */ }) |
-</p>

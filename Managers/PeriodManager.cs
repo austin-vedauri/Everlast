@@ -1,4 +1,5 @@
 ﻿using Everlast.Models;
+using Everlast.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -17,9 +18,9 @@ namespace Everlast.Managers
             Guid periodGuid = Guid.NewGuid();
 
             string textCommand = "INSERT INTO tbl_Periods " +
-                "(PeriodGuid, AccountGuid, Start, Stop)" +
+                "(PeriodGuid, AccountGuid, StartDate, StopDate)" +
                 " OUTPUT INSERTED.PeriodId VALUES " +
-                "(@PeriodGuid, @AccountGuid, @Start, @Stop)";
+                "(@PeriodGuid, @AccountGuid, @StartDate, @StopDate)";
 
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
@@ -27,8 +28,8 @@ namespace Everlast.Managers
 
                 command.Parameters.AddWithValue("@PeriodGuid", periodGuid);
                 command.Parameters.AddWithValue("@AccountGuid", model.AccountGuid);
-                command.Parameters.AddWithValue("@Start", model.Start);
-                command.Parameters.AddWithValue("@Stop", model.Stop);
+                command.Parameters.AddWithValue("@StartDate", model.StartDate);
+                command.Parameters.AddWithValue("@StopDate", model.StopDate);
 
                 connection.Open();
 
@@ -63,8 +64,8 @@ namespace Everlast.Managers
                     {
                         model.PeriodGuid = Guid.Parse(reader["PeriodGuid"].ToString());
                         model.AccountGuid = Guid.Parse(reader["AccountGuid"].ToString());
-                        model.Start = Convert.ToDateTime(reader["Start"].ToString());
-                        model.Stop = Convert.ToDateTime(reader["Stop"].ToString());
+                        model.StartDate = Convert.ToDateTime(reader["StartDate"].ToString());
+                        model.StopDate = Convert.ToDateTime(reader["StopDate"].ToString());
                     }
                     connection.Close();
                 }
@@ -75,7 +76,7 @@ namespace Everlast.Managers
         public int Update(Period model)
         {
             int result = 0;
-            string textCommand = "UPDATE tbl_Periods SET Start = @Start, Stop = @Stop WHERE PeriodGuid = @PeriodGuid AND AccountGuid = @AccountGuid";
+            string textCommand = "UPDATE tbl_Periods SET StartDate = @StartDate, StopDate = @StopDate WHERE PeriodGuid = @PeriodGuid AND AccountGuid = @AccountGuid";
 
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
@@ -83,8 +84,8 @@ namespace Everlast.Managers
 
                 command.Parameters.AddWithValue("@PeriodGuid", model.PeriodGuid);
                 command.Parameters.AddWithValue("@AccountGuid", model.AccountGuid);
-                command.Parameters.AddWithValue("@Start", model.Start);
-                command.Parameters.AddWithValue("@Stop", model.Stop);
+                command.Parameters.AddWithValue("@StartDate", model.StartDate);
+                command.Parameters.AddWithValue("@StopDate", model.StopDate);
 
                 connection.Open();
 
@@ -138,14 +139,114 @@ namespace Everlast.Managers
                         {
                             PeriodGuid = Guid.Parse(reader["PeriodGuid"].ToString()),
                             AccountGuid = Guid.Parse(reader["AccountGuid"].ToString()),
-                            Start = Convert.ToDateTime(reader["Start"].ToString()),
-                            Stop = Convert.ToDateTime(reader["Stop"].ToString()),
+                            StartDate = Convert.ToDateTime(reader["StartDate"].ToString()),
+                            StopDate = Convert.ToDateTime(reader["StopDate"].ToString()),
                         };
                         models.Add(model);
                     }
                 }
             }
             return models;
+        }
+
+        public List<PeriodViewModel> GetWorkPeriodsForView()
+        {
+            List<PeriodViewModel> models = new List<PeriodViewModel>();
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                SqlCommand command = new SqlCommand("proc_GetWorkPeriods", connection);
+
+                connection.Open();
+
+                using (SqlDataReader reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        PeriodViewModel model = new PeriodViewModel
+                        {
+                            PeriodGuid = Guid.Parse(reader["PeriodGuid"].ToString()),
+                            AccountGuid = Guid.Parse(reader["AccountGuid"].ToString()),
+                            FullName = reader["FullName"].ToString(),
+                            StartDate = Convert.ToDateTime(reader["StartDate"].ToString()),
+                            StopDate = Convert.ToDateTime(reader["StopDate"].ToString()),
+                        };
+                        models.Add(model);
+                    }
+                }
+            }
+            return models;
+        }
+
+        public List<PeriodViewModel> SearchPeriods(DateTime? startDate = null, DateTime? endDate = null, Guid? accountGuid = null)
+        {
+            List<PeriodViewModel> models = new List<PeriodViewModel>();
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                SqlCommand command = new SqlCommand("proc_GetWorkPeriodsBySearch", connection);
+                command.CommandType = System.Data.CommandType.StoredProcedure;
+
+                if (startDate != null && endDate != null)
+                {
+                    command.Parameters.AddWithValue("@StartDate", (DateTime)startDate);
+                    command.Parameters.AddWithValue("@EndDate", (DateTime)endDate);
+                }
+
+                if (accountGuid != null && accountGuid != Guid.Empty)
+                {
+                    command.Parameters.AddWithValue("@AccountGuid", (Guid)accountGuid);
+                }
+
+                connection.Open();
+
+                using (SqlDataReader reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        PeriodViewModel model = new PeriodViewModel
+                        {
+                            PeriodGuid = Guid.Parse(reader["PeriodGuid"].ToString()),
+                            AccountGuid = Guid.Parse(reader["AccountGuid"].ToString()),
+                            FullName = reader["FullName"].ToString(),
+                            StartDate = Convert.ToDateTime(reader["StartDate"].ToString()),
+                            StopDate = Convert.ToDateTime(reader["StopDate"].ToString()),
+                        };
+                        models.Add(model);
+                    }
+                }
+            }
+            return models;
+        }
+
+        public Period GetPeriodByPeriodGuid(Guid periodGuid)
+        {
+            Period model = new Period();
+
+            string textCommand = "SELECT * FROM tbl_Periods WHERE PeriodGuid = @PeriodGuid";
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                SqlCommand command = new SqlCommand(textCommand, connection);
+
+                command.Parameters.AddWithValue("@PeriodGuid", periodGuid);
+
+                connection.Open();
+
+                using (SqlDataReader reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+
+                        model.PeriodGuid = Guid.Parse(reader["PeriodGuid"].ToString());
+                        model.AccountGuid = Guid.Parse(reader["AccountGuid"].ToString());
+                        model.StartDate = Convert.ToDateTime(reader["StartDate"].ToString());
+                        model.StopDate = Convert.ToDateTime(reader["StopDate"].ToString());
+
+                    }
+                }
+            }
+            return model;
         }
 
         public List<Period> GetPeriodsByAccount(Guid accountGuid)
@@ -170,8 +271,8 @@ namespace Everlast.Managers
                         {
                             PeriodGuid = Guid.Parse(reader["PeriodGuid"].ToString()),
                             AccountGuid = Guid.Parse(reader["AccountGuid"].ToString()),
-                            Start = Convert.ToDateTime(reader["Start"].ToString()),
-                            Stop = Convert.ToDateTime(reader["Stop"].ToString()),
+                            StartDate = Convert.ToDateTime(reader["StartDate"].ToString()),
+                            StopDate = Convert.ToDateTime(reader["StopDate"].ToString()),
                         };
                         models.Add(model);
                     }
@@ -187,9 +288,9 @@ namespace Everlast.Managers
             if (models.Count > 0)
             {
                 models = models.Where(model =>
-                model.Start.Year == date.Year &&
-                model.Start.Month == date.Month &&
-                model.Start.Day == date.Day
+                model.StartDate.Year == date.Year &&
+                model.StartDate.Month == date.Month &&
+                model.StartDate.Day == date.Day
                 ).ToList();
             }
 
@@ -202,96 +303,140 @@ namespace Everlast.Managers
 
             if (models.Count > 0)
             {
-                models = models.Where(model => model.Start > ManagerAssistant.GetFirstDayOfCurrentWeek()).ToList();
-                models = models.Where(model => model.Start < ManagerAssistant.GetLastDayOfCurrentWeek()).ToList();
+                models = models.Where(model => model.StartDate > ManagerAssistant.GetFirstDayOfCurrentWeek()).ToList();
+                models = models.Where(model => model.StartDate < ManagerAssistant.GetLastDayOfCurrentWeek()).ToList();
             }
 
             return models;
         }
 
-        public List<Slot> GetAvailableAppointmentTimesForInjectorOnDate(DateTime date, Guid accountGuid, Guid serviceGuid)
+        public List<Slot> GetAvailableAppointmentTimesForInjectorByPeriod(Guid periodGuid, Guid accountGuid, Guid serviceGuid)
         {
-            List<Period> periods = new List<Period>();
-            Service service = new Service();
             List<Slot> timeslots = new List<Slot>();
-            List<Appointment> appointments = new List<Appointment>();
-            List<TimeSpan> potentials = new List<TimeSpan>();
             Dictionary<DateTime, TimeSpan> unavailables = new Dictionary<DateTime, TimeSpan>();
+            Dictionary<DateTime, TimeSpan> availables = new Dictionary<DateTime, TimeSpan>();
 
-            //periods = GetPeriodsByAccountForDate(date, accountGuid);
-            periods = GetPeriodsByAccountForCurrentWeek(accountGuid);
-            appointments = new AppointmentManager().GetAppointmentsByInjectorForDate(accountGuid, date);
-            service = new ServiceManager().Read(serviceGuid);
+            Period period = GetPeriodByPeriodGuid(periodGuid);
+            Service service = new ServiceManager().Read(serviceGuid);
             TimeSpan requestedDuration = new TimeSpan(service.Hours, service.Minutes, 0);
 
-            foreach (Period period in periods)
+            List<Appointment> appointments = new AppointmentManager().GetAppointmentsByPeriodGuid(periodGuid).OrderBy(model => model.AppointmentStart.Hour).ToList();
+
+            if (appointments.Count > 0)
             {
-                List<Appointment> bookedApps = appointments.Where(app => app.PeriodGuid == period.PeriodGuid).OrderBy(model => model.AppointmentStart.Hour).ToList();
-
-                if (bookedApps.Count > 0)
+                // build unavailable slots
+                foreach (Appointment app in appointments)
                 {
-                    foreach (Appointment app in bookedApps)
-                    {
-                        // what is the duration of the appointment?
-                        TimeSpan bookedAppointmentDuration = app.AppointmentEnd - app.AppointmentStart;
+                    TimeSpan appDuration = app.AppointmentEnd - app.AppointmentStart;
+                    unavailables.Add(app.AppointmentStart, appDuration);
+                }
 
-                        // this appointment creates an unavailable moment
-                        // add whenever the moment starts and how long it is
-                        unavailables.Add(app.AppointmentStart, bookedAppointmentDuration);
+                if (unavailables.Count > 0)
+                {
+                    // build available slots
+
+                    // calculate the time in between unavailable slots
+                    // to get available slots
+
+                    DateTime currentStartTime = period.StartDate;
+
+                    foreach (KeyValuePair<DateTime, TimeSpan> bookedSlot in unavailables)
+                    {
+                        // get the difference slot based on the unavailable slot and start time
+                        TimeSpan potentialSlotTime = bookedSlot.Key - currentStartTime;
+
+                        // check if that available slot is long enough for the duration
+                        if (potentialSlotTime >= requestedDuration)
+                        {
+                            // it's long enough, we should add it to the availables
+                            availables.Add(currentStartTime, potentialSlotTime);
+                        }
+                        else
+                        {
+                            // it's not long enough, discard it's use
+                        }
                     }
 
-                    // now, we see when we ARE available
-                    DateTime currentStartTime = period.Start;
-                    // go thru each unavailable moment
-                    foreach (KeyValuePair<DateTime, TimeSpan> unavailableMoment in unavailables)
+                    // now we can check the timespan after all of the appointments
+                    // based on the last appointments end time
+
+                    // get last appointments end time
+                    DateTime lastAppointmentEndTime = unavailables.Last().Key.Add(unavailables.Last().Value);
+
+                    // subtract it from the end of the work period to get the remaining time
+                    TimeSpan remainingWorkPeriodTime = period.StopDate - lastAppointmentEndTime;
+
+                    // we can add the remaining work period time to the availables because it's not booked
+                    availables.Add(lastAppointmentEndTime, remainingWorkPeriodTime);
+
+                    // now we can loop through the availables and build some slots
+
+                    // set a start time to keep up with each available
+                    DateTime availableStartTime = new DateTime();
+
+                    foreach (KeyValuePair<DateTime, TimeSpan> emptyWorkPeriodSpan in availables)
                     {
-                        Slot slot = new Slot();
-                        // think about a timeline
-                        // think about measuring the first unavailable timespan
-                        // get the before time..
+                        // set the start time
+                        availableStartTime = emptyWorkPeriodSpan.Key;
 
-                        // this is my available moment
-                        TimeSpan availableSpan = unavailableMoment.Key - currentStartTime;
-                        slot.StartTime = currentStartTime;
-                        // add that available moment to a list of moments
-                        slot.Duration = availableSpan;
+                        TimeSpan allowedTime = emptyWorkPeriodSpan.Value;
 
-                        // this is how i get my next start time
-                        DateTime endOfUnavailableMoment = currentStartTime.Add(unavailableMoment.Value);
-                        currentStartTime = endOfUnavailableMoment;
+                        if (allowedTime >= requestedDuration)
+                        {
+                            // we have an empty work period span that is longer than the requested duration
+                            do
+                            {
+                                Slot slot = new Slot
+                                {
+                                    PeriodGuid = period.PeriodGuid,
+                                    Duration = requestedDuration,
+                                    StartTime = availableStartTime,
+                                    EndTime = availableStartTime.Add(requestedDuration)
+                                };
 
-                        slot.PeriodGuid = period.PeriodGuid;
-                        potentials.Add(availableSpan);
+                                allowedTime -= requestedDuration;
 
+                                if (slot.StartTime >= DateTime.Now.AddMinutes(15))
+                                {
+                                    timeslots.Add(slot);
+                                }
+
+                            } while (allowedTime >= requestedDuration);
+                        }
+                    }
+                }
+            }
+            else
+            {
+                // set the current start time
+                DateTime currentStartTime = period.StartDate;
+                // set the total time for the current work period
+                TimeSpan totalPeriod = period.StopDate - period.StartDate;
+
+                do
+                {
+                    // create a new slot 
+                    Slot slot = new Slot
+                    {
+                        PeriodGuid = period.PeriodGuid,
+                        Duration = requestedDuration,
+                        StartTime = currentStartTime,
+                        EndTime = currentStartTime.Add(requestedDuration)
+                    };
+
+                    // check if the slot's start time is later than 15 minutes from now
+                    if (slot.StartTime > DateTime.Now.AddMinutes(15))
+                    {
                         timeslots.Add(slot);
                     }
 
-                }
-                else
-                {
-                    DateTime currentStartTime = period.Start;
-                    TimeSpan totalPeriod = period.Stop - period.Start;
-                    do
-                    {
-                        Slot slot = new Slot
-                        {
-                            PeriodGuid = period.PeriodGuid,
-                            Duration = requestedDuration,
-                            StartTime = currentStartTime,
-                            EndTime = currentStartTime.Add(requestedDuration)
-                        };
+                    // set the start time to the next available time based on duration
+                    currentStartTime = currentStartTime.Add(requestedDuration);
 
-                        if (slot.StartTime > DateTime.Now.AddHours(requestedDuration.Hours).AddMinutes(requestedDuration.Minutes))
-                        {
-                            timeslots.Add(slot);
-                        }
+                    // subtract the duration from the work period
+                    totalPeriod -= requestedDuration;
 
-                        currentStartTime = currentStartTime.Add(requestedDuration);
-
-                        totalPeriod -= requestedDuration;
-
-                    } while (totalPeriod > requestedDuration);
-                }
+                } while (totalPeriod > requestedDuration);
             }
             return timeslots;
         }

@@ -17,12 +17,15 @@
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.AccountType, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownListFor(model => model.AccountType, new SelectList(string.Empty, "Value", "Text", 0), new { @class = "form-control" })
+        @if ((int)System.Web.HttpContext.Current.Session["AccountType"] == (int)Everlast.enums.AccountTypes.Injector || (int)System.Web.HttpContext.Current.Session["AccountType"] == (int)Everlast.enums.AccountTypes.Administrator)
+        {
+            <div class="form-group">
+                @Html.LabelFor(model => model.AccountType, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownListFor(model => model.AccountType, new SelectList(string.Empty, "Value", "Text", Model.AccountType), new { @class = "form-control" })
+                </div>
             </div>
-        </div>
+        }
 
         <div class="form-group">
             @Html.LabelFor(model => model.Username, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -88,17 +91,19 @@
         $(document).ready(() => onDocumentReady());
 
         // events
-        $("#AccountType").change(function (event) {
-
-        });
+        $("#AccountType").change(() => onAccountTypeChange());
 
         // functions
         function onDocumentReady() {
             LoadAccountTypes();
         }
 
+        function onAccountTypeChange() {
+
+        }
+
         function LoadAccountTypes() {
-            Everlast.Request.DropData('@Url.Action("GetAccountTypes", "Helper")', "AccountType");
+            Everlast.Request.DropData('@Url.Action("GetAccountTypes", "Helper")', "AccountType", null, "@Model.AccountType");
         }
 
     </script>

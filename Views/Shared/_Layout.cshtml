@@ -8,50 +8,52 @@
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
-
-
     <nav class="navbar navbar-expand-lg fixed-top navbar-light bg-light v-custom-nav v-box-shadow">
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
+        <button class="navbar-toggler v-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            @*<span class="navbar-toggler-icon"></span>*@
+            <span>Menu</span>
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav v-navbar">
                 <li class="nav-item v-nav-item">
-                    @Html.ActionLink("Home", "Index", "Home", null, new { @class = "nav-link" })
+                    @Html.ActionLink("Home", "Index", "Home", null, new { @class = "nav-link v-nav-link" })
                 </li>
                 <li class="nav-item v-nav-item">
-                    @Html.ActionLink("About", "About", "Home", null, new { @class = "nav-link" })
+                    @Html.ActionLink("About", "About", "Home", null, new { @class = "nav-link v-nav-link" })
                 </li>
                 <li class="nav-item v-nav-item">
-                    @Html.ActionLink("Services", "Services", "Home", null, new { @class = "nav-link" })
+                    @Html.ActionLink("Services", "Services", "Home", null, new { @class = "nav-link v-nav-link" })
                 </li>
                 <li class="nav-item v-nav-item">
-                    @Html.ActionLink("Events", "Events", "Home", null, new { @class = "nav-link" })
+                    @Html.ActionLink("Events", "Events", "Home", null, new { @class = "nav-link v-nav-link" })
                 </li>
                 <li class="nav-item v-nav-item">
-                    @Html.ActionLink("Contact", "Contact", "Home", null, new { @class = "nav-link" })
+                    @Html.ActionLink("Contact", "Contact", "Home", null, new { @class = "nav-link v-nav-link" })
                 </li>
                 <li class="nav-item v-nav-item">
-                    @Html.ActionLink("Gallery", "Gallery", "Home", null, new { @class = "nav-link" })
+                    @Html.ActionLink("Gallery", "Gallery", "Home", null, new { @class = "nav-link v-nav-link" })
                 </li>
                 <li class="nav-item v-nav-item">
                     @if (System.Web.HttpContext.Current.Session["AccountGuid"] != null && (int)System.Web.HttpContext.Current.Session["AccountType"] != (int)Everlast.enums.AccountTypes.Guest)
                     {
-                        @Html.ActionLink("Account", "Home", "Account", new { accountGuid = (Guid)System.Web.HttpContext.Current.Session["AccountGuid"] }, new { @class = "nav-link" })
+                        @Html.ActionLink("Account", "Home", "Account", new { accountGuid = (Guid)System.Web.HttpContext.Current.Session["AccountGuid"] }, new { @class = "nav-link v-nav-link" })
                     }
                     else
                     {
-                        @Html.ActionLink("Members", "Members", "Home", null, new { @class = "nav-link" })
+                        @Html.ActionLink("Members", "Members", "Home", null, new { @class = "nav-link v-nav-link" })
                     }
                 </li>
             </ul>
         </div>
     </nav>
-    <div class="container-fluid body-content">
+    <div id="dvMainBody" class="container-fluid body-content">
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year - Everlasting Aesthetics</p>
+            @{
+
+                Html.RenderPartial("_Footer");
+            }
         </footer>
     </div>
 
@@ -60,10 +62,48 @@
     @RenderSection("scripts", required: false)
 
     <script type="text/javascript">
-            $(document).ready(function () {
-                console.log(location.pathname);
-                $('a[href$="' + location.pathname + '"]').addClass('active');
-            });
+
+        // onReadt
+        $(document).ready(function () {
+
+        });
+
+        // events
+        $("#btnCycleFont").click(() => onClickCycleFonts());
+
+        // testLists
+        let fontFamilyCounter = 0;
+        let fontFamilies = [
+            "'Franklin Gothic Medium', 'Arial Narrow', Arial, sans- serif",
+            "'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif",
+            "Georgia, 'Times New Roman', Times, serif"
+        ]
+
+        // functions
+        function onChangeGlobalViewRequest() {
+            console.log(location.pathname);
+            $('a[href$="' + location.pathname + '"]').addClass('active');
+        }
+
+        function onChangeGlobalFontUpdate() {
+
+            console.log(fontFamilyCounter);
+            console.log(fontFamilies[fontFamilyCounter]);
+
+            fontFamilyCounter++;
+            if (fontFamilyCounter > 2) {
+                fontFamilyCounter = 0;
+            }
+
+            let body = document.getElementById("dvMainBody");
+            body.style.fontFamily = fontFamilies[fontFamilyCounter];
+            let currentFontSpan = document.getElementById("spnCurrentFontFamily");
+            currentFontSpan.innerHTML = fontFamilies[fontFamilyCounter];
+        }
+
+        function onClickCycleFonts() {
+            onChangeGlobalFontUpdate();
+        }
     </script>
 
 </body>

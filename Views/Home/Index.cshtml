@@ -1,58 +1,112 @@
 ﻿
-<div class="v-cover-section">
+<div class="v-section landing-bg">
     <div class="row v-cover-section-content">
         <div class="col-lg-12 text-center">
-            <h2 class="v-header">Everlasting Aesthetics</h2>
-            <blockquote class="blockquote">
-                <p class="mb-0">
-
-                </p>
-            </blockquote>
         </div>
     </div>
 </div>
 
-
-<div class="v-cover-section v-wheat-bg">
-    <div class="row v-cover-section-content">
+<div class="v-slim-section bg-teal">
+    <div class="row">
         <div class="col-lg-12 text-center">
-            <h2 class="v-header">Aesthetic services tailored to your goals.</h2>
+            <h2 class="v-header">Find your service.</h2>
             <blockquote class="blockquote">
                 <p class="mb-0">
-                    
+                    Good text content is about the customer. We offer aesthetic services tailored to your goals.
                 </p>
             </blockquote>
+            @Html.ActionLink("Services", "Services", "Home", null, new { @class = "btn btn-lg btn-outline-light" })
         </div>
     </div>
 </div>
 
-@*<div class="v-section">
+<div class="v-section">
     <div class="row v-cover-section-content">
+        <div class="col-lg-12 text-center">
+            <h2 class="v-header">Become a member today.</h2>
+            <blockquote class="blockquote">
+                <p class="mb-0">
+                    You should generally display a captivating call-to-action with incentives.
+                    Enjoy monthly newsletters, membership benefits and more. Sign up to get started.
+                </p>
+            </blockquote>
+            @Html.ActionLink("Sign Up", "Register", "Account", null, new { @class = "btn btn-lg btn-outline-dark" })
+        </div>
+    </div>
+</div>
+
+<div class="v-slim-section bg-gold">
+    <div class="row">
+        <div class="col-lg-12 text-center">
+            <h2 class="v-header">Join the fun.</h2>
+            <blockquote class="blockquote">
+                <p class="mb-0">
+                    Landing pages should throw everything at them. RSVP for any of our events within minutes. Don't miss out!
+                </p>
+            </blockquote>
+            @Html.ActionLink("View Events", "Events", "Home", null, new { @class = "btn btn-lg btn-outline-dark" })
+        </div>
+    </div>
+</div>
+
+<div class="v-slim-section">
+    <div class="row">
         <div class="col-lg-12 text-center">
             <div class="v-sock v-sock-left">
-                <h1 class="v-header">First Block</h1>
+                <h2 class="v-header">One Good Reason</h2>
                 <blockquote class="blockquote">
                     <p class="mb-0">
-                        Some information about things important!
+                        Maybe provide some reasons you guys are the best
                     </p>
                 </blockquote>
             </div>
             <div class="v-sock v-sock-center">
-                <h1 class="v-header">Middle Block</h1>
+                <h2 class="v-header">Two Quick Points</h2>
                 <blockquote class="blockquote">
                     <p class="mb-0">
-                        Some information about things important!
+                        Or have easy to remember phrases in these.
                     </p>
                 </blockquote>
             </div>
             <div class="v-sock v-sock-right">
-                <h1 class="v-header">Last Block</h1>
+                <h2 class="v-header">Last Chance</h2>
                 <blockquote class="blockquote">
                     <p class="mb-0">
-                        Some information about things important!
+                        I'm not sure if I even like these blocks myself.
                     </p>
                 </blockquote>
             </div>
         </div>
     </div>
-</div>*@
+</div>
+
+<div class="v-section bg-black">
+    <div class="row v-cover-section-content">
+        <div class="col-lg-12 text-center">
+            <h2 class="v-header">Experience the visuals.</h2>
+            <blockquote class="blockquote">
+                <p class="mb-0">
+                    The audience that scrolls this far has a good bounce-rate, meaning they will leave your
+                    site without purchasing. But we have a few tricks, throw them in the gallery to keep their attention one last time
+                    with fingers crossed.
+                    See how others found their own everlasting aesthetics.
+                </p>
+            </blockquote>
+            @Html.ActionLink("Gallery", "Gallery", "Home", null, new { @class = "btn btn-lg btn-outline-light" })
+        </div>
+    </div>
+</div>
+
+@section scripts {
+
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            //$("#txtLandingTitle").animate({
+            //    fontSize: '60px',
+            //}, 2000);
+        });
+
+    </script>
+
+}

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Everlast.Managers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -70,6 +71,11 @@ namespace Everlast.Controllers
         {
             Session["AccountGuid"] = accountGuid;
             Session["AccountType"] = accountType;
+        }
+
+        public void LogError(string message, string methodName)
+        {
+            new ErrorManager().RegisterError(message, methodName, GetCurrentAccountGuid());
         }
     }
 }

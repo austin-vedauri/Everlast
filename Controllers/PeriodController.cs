@@ -1,5 +1,6 @@
 ﻿using Everlast.Managers;
 using Everlast.Models;
+using Everlast.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,8 +19,8 @@ namespace Everlast.Controllers
                 Accounts = new AccountManager().GetAccountsByType(enums.AccountTypes.Injector),
             };
 
-            model.Start = DateTime.Now;
-            model.Stop = DateTime.Now.AddHours(4);
+            model.StartDate = DateTime.Now;
+            model.StopDate = DateTime.Now.AddHours(4);
 
             return View(model);
         }
@@ -29,6 +30,15 @@ namespace Everlast.Controllers
         {
             if (ModelState.IsValid)
             {
+                model.StartDate = model.BeginDate.Add(model.BeginTime);
+                model.StopDate = model.EndDate.Add(model.EndTime);
+
+                if (model.StartDate > model.StopDate)
+                {
+                    ViewBag.MessageResult = "Start date and time cannot be later than the end date and time.";
+                    return View(model);
+                }
+
                 model = new PeriodManager().Create(model);
                 if (model.PeriodGuid != Guid.Empty)
                 {
@@ -71,8 +81,8 @@ namespace Everlast.Controllers
 
         public ActionResult Periods()
         {
-            List<Period> models = new List<Period>();
-            models = new PeriodManager().GetPeriods();
+            List<PeriodViewModel> models = new List<PeriodViewModel>();
+            models = new PeriodManager().GetWorkPeriodsForView();
             return View(models);
         }
 
@@ -83,6 +93,11 @@ namespace Everlast.Controllers
             return View(models);
         }
 
+        public ActionResult SearchPeriods(DateTime? startDate = null, DateTime? endDate = null, Guid? accountGuid = null)
+        {
+            List<PeriodViewModel> model = new PeriodManager().SearchPeriods(startDate, endDate, accountGuid);
+            return PartialView("_Periods", model);
+        }
      
     }
 }

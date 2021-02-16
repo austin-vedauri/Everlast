@@ -1,6 +1,5 @@
 ﻿body {
     padding-top: 60px;
-    padding-bottom: 20px;
 }
 
 /* Set padding to keep content from hitting the edges */
@@ -33,6 +32,31 @@ textarea {
     background-color: wheat;
 }
 
+.landing-bg {
+    background-image: url(../img/image102.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+
+.outer-table {
+    overflow-y: auto;
+    height: 350px;
+}
+
+.outer-table table {
+    width: 100%;
+    table-layout: fixed;
+    border: 1px solid black;
+    border-spacing: 1px;
+}
+
+.outer-table table th {
+    text-align: left;
+    top: 0;
+    position: sticky;
+}
+
 .v-cut {
     position: relative;
     text-align: center;
@@ -56,6 +80,7 @@ textarea {
 
 .v-cover-section {
     height: 100vh;
+
 }
 
 .v-cover-image {
@@ -72,10 +97,18 @@ textarea {
     opacity: .8;
 }
 
+.v-label-button {
+    margin-top: 38px;
+}
+
+.jumbotron-slim {
+    padding: 15px !important;
+}
+
 .v-cover-section-content {
     margin: 0;
     position: relative;
-    top: 50%;
+    top: 45%;
     -ms-transform: translateY(-50%);
     transform: translateY(-50%);
 }
@@ -93,6 +126,12 @@ textarea {
     min-height: 100vh;
     height: auto;
     width: 100%;
+}
+
+.v-slim-section {
+    height: auto;
+    width: 100%;
+    padding: 50px;
 }
 
 .v-block-corner {
@@ -133,10 +172,10 @@ textarea {
     font-size: 20px;
 }
 
-    .v-nav-item:hover {
-        box-shadow: 1px 1px 5px -1px black;
-        /*border-radius: 60px;*/
-    }
+.v-nav-item:hover {
+    box-shadow: 1px 1px 5px -1px black;
+    /*border-radius: 60px;*/
+}
 
 .v-card {
     margin-bottom: 35px;
@@ -169,6 +208,14 @@ textarea {
 
 .v-sock-right {
     top: 50px;
+}
+
+.team-photo-scope {
+    /*border-bottom-left-radius: 60px;
+    border-bottom-right-radius: 60px;*/
+    max-height: 369px;
+    min-height: 250px;
+    height: auto;
 }
 
 .chevron-divider {
@@ -208,6 +255,10 @@ textarea {
     min-width: 100%;
 }
 
+.v-toggler {
+    width: 100%;
+}
+
 .v-extend-section {
     height: 150vh;
 }
@@ -238,6 +289,15 @@ textarea {
         max-width: 50%;
         margin: 0 auto;
     }
+    .v-nav-item {
+        width: 100%;
+        text-align: center;
+        font-size: 20px;
+    }
+
+    .v-custom-nav {
+        opacity: 1;
+    }
 }
 
 @media (max-width: 768px) {
@@ -255,4 +315,79 @@ textarea {
         display: block;
         position: relative;
     }
+
+
+    .v-nav-item {
+        width: 100%;
+        text-align: center;
+        font-size: 30px;
+    }
+
+    .v-navbar {
+        margin: 0;
+        width: 100%;
+        height: 100vh;
+    }
+
+    .v-custom-nav {
+        opacity: 1;
+    }
+
+    .v-nav-link {
+        border-bottom: 2px solid gainsboro;
+    }
+}
+
+/*
+    begin colors
+*/
+.bg-teal {
+    background-color: #008080;
+    color: #FFF;
+}
+
+.text-teal {
+    color: #008080;
+}
+
+.border-teal {
+    border: 1px solid #008080;
+}
+
+.bg-white {
+    background-color: #FFF;
+}
+
+.text-white {
+    color: #FFF;
+}
+
+.border-white {
+    border: 1px solid #FFF;
+}
+
+.bg-black {
+    background-color: #000;
+    color: #FFF;
+}
+
+.text-black {
+    color: #000;
+}
+
+.border-black {
+    border: 1px solid #000;
+}
+
+.bg-gold {
+    background-color: #ffd700;
+}
+
+.text-gold {
+    color: #ffd700;
+}
+
+.border-gold {
+    border: 1px solid #ffd700;
+    font-family:Georgia, 'Times New Roman', Times, serif;
 }

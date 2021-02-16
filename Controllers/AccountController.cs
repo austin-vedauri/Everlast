@@ -4,6 +4,7 @@ using Everlast.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Web;
 using System.Web.Mvc;
 
@@ -26,8 +27,41 @@ namespace Everlast.Controllers
         {
             if (ModelState.IsValid)
             {
+
+                if (String.IsNullOrEmpty(model.FirstName) || 
+                    String.IsNullOrEmpty(model.LastName) ||
+                    String.IsNullOrEmpty(model.Email) ||
+                    String.IsNullOrEmpty(model.Phone) ||
+                    String.IsNullOrEmpty(model.Username) ||
+                    String.IsNullOrEmpty(model.Password)
+                    )
+                {
+                    ViewBag.MessageResult = "Please fill out the form completely to register.";
+                    return View(model);
+                }
+                else if (!new HelperController().IsValidEmailAddress(model.Email))
+                {
+                    ViewBag.MessageResult = "Please enter a valid email address.";
+                    return View(model);
+                }
+
                 model = new AccountManager().Register(model);
-                return RedirectToAction("Home", new { accountGuid = model.AccountGuid });
+
+                try
+                {
+                    Mail message = new Mail
+                    {
+                        To = model.Email
+                    };
+                    new MailManager().SendMailToNewMember(message);
+                }
+                catch (Exception ex)
+                {
+                    LogError(ex.Message, MethodBase.GetCurrentMethod().ToString());
+                }
+
+                SetAccountSession(model.AccountGuid, model.AccountType);
+                return RedirectToAction("Home");
             }
 
             return View(model);
@@ -43,12 +77,29 @@ namespace Everlast.Controllers
         {
             if (ModelState.IsValid)
             {
-                model = new AccountManager().Login(model);
-                Guid test = model.AccountGuid;
-                return RedirectToAction("Home", new { accountGuid = model.AccountGuid });
+                try
+                {
+                    model = new AccountManager().Login(model);
+                }
+                catch (Exception ex)
+                {
+                    LogError(ex.Message, MethodBase.GetCurrentMethod().ToString());
+                }
+               
+                if (model.AccountGuid != Guid.Empty)
+                {
+                    SetAccountSession(model.AccountGuid, model.AccountType);
+                    return RedirectToAction("Home");
+                }
+                else
+                {
+                    ViewBag.MessageResult = "The username or password is not valid.";
+                    return View(new Account());
+                }
             }
 
-            return View(model);
+            ViewBag.MessageResult = "The username and password are both required";
+            return View(new Account());
         }
 
         public ActionResult Logout()
@@ -58,16 +109,44 @@ namespace Everlast.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        public ActionResult Home(Guid accountGuid)
+        public ActionResult Home()
         {
-            Account model = new AccountManager().Read(accountGuid);
-            SetAccountSession(model.AccountGuid, model.AccountType);
-            return View(model);
+            Guid accountGuid = GetCurrentAccountGuid();
+
+            if (accountGuid == Guid.Empty)
+            {
+                return View("Login");
+            }
+            else
+            {
+                Account model = new Account();
+
+                try
+                {
+                    model = new AccountManager().Read(accountGuid);
+                }
+                catch (Exception ex)
+                {
+                    LogError(ex.Message, MethodBase.GetCurrentMethod().ToString());
+                }
+
+                return View(model);
+            }
         }
 
         public ActionResult Accounts()
         {
-            List<Account> models = new AccountManager().GetAccounts();
+            List<Account> models = new List<Account>();
+
+            try
+            {
+                models = new AccountManager().GetAccounts();
+            }
+            catch (Exception ex)
+            {
+                LogError(ex.Message, MethodBase.GetCurrentMethod().ToString());
+            }
+
             return View(models);
         }
 
@@ -81,7 +160,15 @@ namespace Everlast.Controllers
         {
             if (ModelState.IsValid)
             {
-                model = new AccountManager().Register(model);
+                try
+                {
+                    model = new AccountManager().Register(model);
+                }
+                catch (Exception ex)
+                {
+                    LogError(ex.Message, MethodBase.GetCurrentMethod().ToString());
+                }
+
                 return RedirectToAction("Accounts");
             }
 
@@ -106,7 +193,7 @@ namespace Everlast.Controllers
             if (ModelState.IsValid)
             {
                 model = new AccountManager().Update(model);
-                return RedirectToAction("Home", model);
+                return RedirectToAction("Read", new { accountGuid = model.AccountGuid });
             }
 
             return View(model);
@@ -114,8 +201,15 @@ namespace Everlast.Controllers
 
         public ActionResult Delete(Guid accountGuid)
         {
+            Account model = new AccountManager().Read(accountGuid);
+            return PartialView("_DeleteAccount", model);
+        }
+
+        [HttpPost]
+        public JsonResult DeleteAccount(Guid accountGuid)
+        {
             int result = new AccountManager().Delete(accountGuid);
-            return RedirectToAction("Accounts");
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult Options()

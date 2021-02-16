@@ -12,7 +12,6 @@
     @Html.AntiForgeryToken()
     @Html.HiddenFor(model => model.AppointmentGuid)
     @Html.HiddenFor(model => model.ClientGuid)
-    @Html.HiddenFor(model => model.PeriodGuid)
 
 <div class="form-horizontal">
     <h4>Appointment</h4>
@@ -20,23 +19,31 @@
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
     <div class="form-group">
-        @Html.LabelFor(model => model.InjectorGuid, htmlAttributes: new { @class = "control-label col-md-2" })
+        <label class="control-label col-md-2">Select Injector</label>
         <div class="col-md-10">
-            @Html.DropDownListFor(model => model.InjectorGuid, new SelectList(string.Empty, "Value", "Text"), new { @class = "form-control" })
+            @Html.DropDownListFor(model => model.InjectorGuid, new SelectList(string.Empty, "Value", "Text", Model.InjectorGuid), new { @class = "form-control" })
             @Html.ValidationMessageFor(model => model.InjectorGuid, "", new { @class = "text-danger" })
         </div>
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(model => model.ServiceGuid, htmlAttributes: new { @class = "control-label col-md-2" })
+        <label class="control-label col-md-2">Select Service</label>
         <div class="col-md-10">
-            @Html.DropDownListFor(model => model.ServiceGuid, new SelectList(string.Empty, "Value", "Text"), new { @class = "form-control" })
+            @Html.DropDownListFor(model => model.ServiceGuid, new SelectList(string.Empty, "Value", "Text", Model.ServiceGuid), new { @class = "form-control" })
             @Html.ValidationMessageFor(model => model.ServiceGuid, "", new { @class = "text-danger" })
         </div>
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(model => model.AppointmentStart, htmlAttributes: new { @class = "control-label col-md-2" })
+        <label class="control-label col-md-2">Select Day</label>
+        <div class="col-md-10">
+            @Html.DropDownListFor(model => model.PeriodGuid, new SelectList(string.Empty, "Value", "Text"), new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.PeriodGuid, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-md-2">Select Time</label>
         <div class="col-md-10">
             @Html.DropDownListFor(model => model.AppointmentStart, new SelectList(string.Empty, "Value", "Text"), new { @class = "form-control" })
             @Html.ValidationMessageFor(model => model.AppointmentStart, "", new { @class = "text-danger" })
@@ -45,8 +52,7 @@
 
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
-            @*<input id="btnConfirm" type="button" value="Confirm" class="btn btn-default" />*@
-            <input id="btnSubmit" type="submit" value="Create" class="btn btn-default" />
+            <input id="btnSubmit" type="submit" value="Book Now" class="btn btn-lg btn-outline-dark" />
         </div>
     </div>
 </div>
@@ -60,19 +66,26 @@
         $(document).ready(function () {
             let injectorLoaded = LoadInjectors();
             let serviceLoaded = LoadServices();
+            let periodLoaded = LoadPeriods();
             let appointmentLoaded = LoadAvailability();
         });
 
         // events
         $("#InjectorGuid").change(() => onChangeInjector());
         $("#ServiceGuid").change(() => onChangeService());
+        $("#PeriodGuid").change(() => onChangePeriods());
 
         // functions
         function onChangeInjector() {
-            LoadAvailability();
+            LoadPeriods();
+            $("#AppointmentStart").empty();
         }
 
         function onChangeService() {
+            LoadPeriods();
+        }
+
+        function onChangePeriods() {
             LoadAvailability();
         }
 
@@ -81,20 +94,38 @@
         }
 
         function LoadServices() {
-            Everlast.Request.DropData('@Url.Action("GetAvailableServices", "Helper")', "ServiceGuid");
+            Everlast.Request.DropData('@Url.Action("GetAvailableServices", "Helper")', "ServiceGuid", null, "@Model.ServiceGuid");
+            console.log("@Model.ServiceGuid");
+        }
+
+        function LoadPeriods() {
+            let accountGuid = document.getElementById("InjectorGuid");
+
+            if (accountGuid.value == "" || accountGuid.value == "00000000-0000-0000-0000-000000000000") {
+                return;
+            } else {
+                $("#PeriodGuid").empty();
+                let data = { "accountGuid": accountGuid.value };
+                Everlast.Request.DropData('@Url.Action("GetAvailablePeriods", "Helper")', "PeriodGuid", data);
+            }
         }
 
         function LoadAvailability() {
             let accountGuid = document.getElementById("InjectorGuid");
             let serviceGuid = document.getElementById("ServiceGuid");
+            let periodGuid = document.getElementById("PeriodGuid");
+            let appointmentStart = document.getElementById("AppointmentStart");
+
             if (accountGuid.value == "" ||
                 serviceGuid.value == "" ||
+                periodGuid.value == "" ||
                 accountGuid.value == "00000000-0000-0000-0000-000000000000" ||
-                serviceGuid.value == "00000000-0000-0000-0000-000000000000") {
+                accountGuid.value == "00000000-0000-0000-0000-000000000000" ||
+                periodGuid.value == "00000000-0000-0000-0000-000000000000") {
                 return;
             } else {
-                debugger
-                let data = { "accountGuid": accountGuid.value, "serviceGuid": serviceGuid.value };
+                $("#AppointmentStart").empty();
+                let data = { "accountGuid": accountGuid.value, "serviceGuid": serviceGuid.value, "periodGuid": periodGuid.value };
                 Everlast.Request.DropData('@Url.Action("GetAvailableAppointmentsFromInjector", "Helper")', "AppointmentStart", data);
             }
         }

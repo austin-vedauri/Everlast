@@ -19,10 +19,10 @@
             @Html.DisplayNameFor(model => model.AccountGuid)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Start)
+            @Html.DisplayNameFor(model => model.StartDate)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Stop)
+            @Html.DisplayNameFor(model => model.StopDate)
         </th>
         <th></th>
     </tr>
@@ -36,15 +36,14 @@
             @Html.DisplayFor(modelItem => item.AccountGuid)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Start)
+            @Html.DisplayFor(modelItem => item.StartDate)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Stop)
+            @Html.DisplayFor(modelItem => item.StopDate)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+            @Html.ActionLink("Details", "Read", new { periodGuid = item.PeriodGuid, accountGuid = item.AccountGuid }) |
+            @Html.ActionLink("Delete", "Delete", new { periodGuid = item.PeriodGuid, accountGuid = item.AccountGuid })
         </td>
     </tr>
 }

@@ -1,0 +1,44 @@
+﻿@model Everlast.Models.Treatment
+
+<div>
+    <h4>Treatment</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.TreatmentGuid)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TreatmentGuid)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ServiceGuid)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ServiceGuid)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TreatmentName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TreatmentName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TreatmentDescription)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TreatmentDescription)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

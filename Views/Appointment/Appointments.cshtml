@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Everlast.Models.Appointment>
+﻿@model IEnumerable<Everlast.ViewModels.AppointmentViewModel>
 
 @{
     ViewBag.Title = "Appointments";
@@ -8,68 +8,69 @@
 <h2>Appointments</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-sm btn-outline-dark" })
+    @Html.ActionLink("Dashboard", "Home", "Account", null, new { @class = "btn btn-sm btn-outline-dark" })
 </p>
 <table class="table table-striped table-bordered table-hover">
     <thead class="thead-dark">
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.AppointmentGuid)
+                Injector
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ClientGuid)
+                Client
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.InjectorGuid)
+                Service
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ServiceGuid)
+                Price
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.PeriodGuid)
+                Date
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.AppointmentStart)
+                Start
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.AppointmentEnd)
+                End
             </th>
             <th>
                 Options
             </th>
         </tr>
-        </thead>
+    </thead>
 
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.AppointmentGuid)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ClientGuid)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.InjectorGuid)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ServiceGuid)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.PeriodGuid)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.AppointmentStart)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.AppointmentEnd)
-                </td>
-                <td>
-                    @Html.ActionLink("Edit", "Update", new { appointmentGuid = item.AppointmentGuid }) |
-                    @Html.ActionLink("Details", "Read", new { appointmentGuid = item.AppointmentGuid }) |
-                    @Html.ActionLink("Delete", "Delete", new { appointmentGuid = item.AppointmentGuid })
-                </td>
-            </tr>
-        }
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @item.InjectorName
+            </td>
+            <td>
+                @item.ClientName
+            </td>
+            <td>
+                @item.Title
+            </td>
+            <td>
+                @item.Price
+            </td>
+            <td>
+                @item.AppointmentStart.ToShortDateString()
+            </td>
+            <td>
+                @item.AppointmentStart.ToShortTimeString()
+            </td>
+            <td>
+                @item.AppointmentEnd.ToShortTimeString()
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Update", new { appointmentGuid = item.AppointmentGuid }, new { @class = "btn btn-sm btn-outline-dark" })
+                @Html.ActionLink("Details", "Read", new { appointmentGuid = item.AppointmentGuid }, new { @class = "btn btn-sm btn-outline-dark" })
+                @Html.ActionLink("Delete", "Delete", new { appointmentGuid = item.AppointmentGuid }, new { @class = "btn btn-sm btn-outline-dark" })
+            </td>
+        </tr>
+    }
 
 </table>

@@ -12,16 +12,16 @@ namespace Everlast.Controllers
     public class HelperController : Controller
     {
         [HttpPost]
-        public JsonResult GetAvailableAppointmentsFromInjector(Guid accountGuid, Guid serviceGuid)
+        public JsonResult GetAvailableAppointmentsFromInjector(Guid accountGuid, Guid serviceGuid, Guid periodGuid)
         {
             // do the big c# work in manager
-            List<Slot> models = new PeriodManager().GetAvailableAppointmentTimesForInjectorOnDate(DateTime.Now, accountGuid, serviceGuid);
+            List<Slot> models = new PeriodManager().GetAvailableAppointmentTimesForInjectorByPeriod(periodGuid, accountGuid, serviceGuid);
 
             List<SelectListItem> modelsSelectList = new List<SelectListItem>
             {
                 new SelectListItem
                 {
-                    Text = "Select...",
+                    Text = "Select Appointment",
                     Value = DateTime.MinValue.ToString()
                 }
             };
@@ -32,8 +32,8 @@ namespace Everlast.Controllers
                 {
                     modelsSelectList.Add(new SelectListItem
                     {
-                        Text = item.StartTime.ToString() + " to " + item.EndTime.ToString(),
-                        Value = item.StartTime.ToString()
+                        Text = item.StartTime.ToShortTimeString().ToString() + " to " + item.EndTime.ToShortTimeString().ToString(),
+                        Value = item.StartTime.ToString(),
                     });
                 }
             }
@@ -50,7 +50,7 @@ namespace Everlast.Controllers
             {
                 new SelectListItem
                 {
-                    Text = "Select Who...",
+                    Text = "Select Injector",
                     Value = Guid.Empty.ToString()
                 }
             };
@@ -79,7 +79,7 @@ namespace Everlast.Controllers
             {
                 new SelectListItem
                 {
-                    Text = "Select...",
+                    Text = "Select Service",
                     Value = Guid.Empty.ToString()
                 }
             };
@@ -98,6 +98,35 @@ namespace Everlast.Controllers
 
             return Json(new SelectList(modelsSelectList, "Value", "Text"), JsonRequestBehavior.AllowGet);
         }
+        
+        [HttpPost]
+        public JsonResult GetAvailablePeriods(Guid accountGuid)
+        {
+            List<Period> models = new PeriodManager().GetPeriodsByAccountForCurrentWeek(accountGuid);
+
+            List<SelectListItem> modelsSelectList = new List<SelectListItem>
+            {
+                new SelectListItem
+                {
+                    Text = "Select Day",
+                    Value = Guid.Empty.ToString()
+                }
+            };
+
+            if (models != null)
+            {
+                foreach (Period model in models)
+                {
+                    modelsSelectList.Add(new SelectListItem
+                    {
+                        Text = model.StartDate.ToShortDateString(),
+                        Value = model.PeriodGuid.ToString()
+                    });
+                }
+            }
+
+            return Json(new SelectList(modelsSelectList, "Value", "Text"), JsonRequestBehavior.AllowGet);
+        }
 
         [HttpPost]
         public JsonResult GetAccountTypes()
@@ -106,7 +135,7 @@ namespace Everlast.Controllers
             {
                 new SelectListItem
                 {
-                    Text = "Select",
+                    Text = "Select Account Type",
                     Value = "0"
                 },
                 new SelectListItem
@@ -139,6 +168,21 @@ namespace Everlast.Controllers
         {
             Party model = new PartyManager().Read(partyGuid);
             return Json(model, JsonRequestBehavior.AllowGet);
+        }
+
+        public bool IsValidEmailAddress(string emailAddress)
+        {
+            if (String.IsNullOrEmpty(emailAddress) || 
+                emailAddress.Length <= 5 ||
+                !emailAddress.Contains(".") ||
+                !emailAddress.Contains("@"))
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
         }
     }
 }

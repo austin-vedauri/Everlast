@@ -38,7 +38,6 @@ namespace Everlast.Controllers
             return View(model);
         }
 
-        [HttpPost]
         public ActionResult Update(Guid partyGuid)
         {
             Party model = new PartyManager().Read(partyGuid);
