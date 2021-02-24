@@ -6,8 +6,7 @@
 }
 
 @Html.HiddenFor(model => model.AccountGuid)
-@Html.HiddenFor(model => model.Password)
-<br />
+
 <div class="container-fluid">
     <div class="row">
         <div class="col-lg-3">
@@ -45,17 +44,69 @@
         </div>
         <div class="col-lg-9">
             <div class="jumbotron jumbotron-slim">
-                <p class="blockquote">
-                    This is your Dashboard.
-                    <br />
-                    Members, Injectors and Admins have access to this page.
-                    <br />
-                    The quick menu displays certain items based on the account type logged in.
-                </p>
+
+                <div class="row">
+                    <div class="col-lg-12">
+                        <span>Welcome @Model.FirstName</span>
+                        <span>
+                            Today is @DateTime.Now.ToShortDateString()
+                        </span>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="dashbox">
+                            You have 0 appointments scheduled
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="dashbox">
+                            There are 0 events scheduled
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="dashbox">
+                            You are not scheduled to work
+                        </div>
+                    </div>
+                </div>
+
+                @*
+                    TODO:
+
+                    create some cool widgets like "My Appointments Today: 2"
+
+                *@
+
             </div>
         </div>
     </div>
 
 </div>
 
+@section scripts {
+
+    <script type="text/javascript">
+
+        // ready
+        $(document).ready(function () {
+            //
+        });
+
+        // events
+
+        // functions
+        function GetNextAppointment() {
+            //
+        }
+
+        function GetNextEvent() {
+            //
+        }
+
+        function GetCurrentWorkPeriod() {
+
+        }
+
+    </script>
+
+}
 

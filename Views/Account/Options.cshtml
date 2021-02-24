@@ -3,10 +3,20 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Options</h2>
+<div class="v-slim-section bg-teal">
+    <div class="row">
+        <div class="col-lg-12 text-center">
+            <h2 class="v-header">Plenty of options.</h2>
+            <blockquote class="blockquote">
+                <p class="mb-0">
+                    Let's get you prepared for your everlasting look.
+                </p>
+            </blockquote>
+        </div>
+    </div>
+</div>
 
 <div class="jumbotron">
-
     <div class="row">
         <div class="col-lg-4 col-md-4 col-sm-12">
             <div class="card v-card text-center">
@@ -20,7 +30,7 @@
                     <p class="card-text">
                         Members receive special treatment...
                     </p>
-                    @Html.ActionLink("Register", "Register", "Account", null, new { @class = "nav-link" })
+                    @Html.ActionLink("Register", "Register", "Account", null, new { @class = "btn btn-outline-dark" })
                 </div>
             </div>
         </div>
@@ -36,7 +46,7 @@
                     <p class="card-text">
                         You can log in to continue...
                     </p>
-                    @Html.ActionLink("Login", "Login", "Account", null, new { @class = "nav-link" })
+                    @Html.ActionLink("Login", "Login", "Account", null, new { @class = "btn btn-outline-dark" })
                 </div>
             </div>
         </div>
@@ -52,10 +62,9 @@
                     <p class="card-text">
                         Book your appointment as a guest.
                     </p>
-                    @Html.ActionLink("Guest", "RegisterGuest", "Account", null, new { @class = "nav-link" })
+                    @Html.ActionLink("Guest", "RegisterGuest", "Account", null, new { @class = "btn btn-outline-dark" })
                 </div>
             </div>
         </div>
     </div>
-
 </div>

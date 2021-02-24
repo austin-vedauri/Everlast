@@ -77,6 +77,7 @@
             });
         },
         DeleteData: function (location, args) {
+            debugger
             $.ajax({
                 type: "POST",
                 async: false,
@@ -85,8 +86,9 @@
                 dataType: "JSON",
                 data: JSON.stringify(args),
                 success: function (data) {
-                    debugger
-                    alert(data);
+                    if (data > 1) {
+                         
+                    }
                 },
                 fail: function (data) {
                     console.log("Error requesting delete...");

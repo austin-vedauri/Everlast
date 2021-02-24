@@ -70,14 +70,30 @@
 
         // events
         $("#btnCycleFont").click(() => onClickCycleFonts());
+        $("#btnCycleHeaderFont").click(() => onClickCycleHeaderFonts());
 
         // testLists
         let fontFamilyCounter = 0;
+        let headerFontFamilyCounter = 0;
+
         let fontFamilies = [
             "'Franklin Gothic Medium', 'Arial Narrow', Arial, sans- serif",
             "'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif",
             "Georgia, 'Times New Roman', Times, serif"
-        ]
+        ];
+
+        let headerFontFamilies = [
+            "Honey",
+            "Housttely",
+            "BrnKos",
+            "DancySript",
+            "DancyScriptOT",
+            "Katroll",
+            "Montezzy",
+            "Roomood",
+            "Wrexamscri",
+            "WrexamscriSun",
+        ];
 
         // functions
         function onChangeGlobalViewRequest() {
@@ -101,8 +117,25 @@
             currentFontSpan.innerHTML = fontFamilies[fontFamilyCounter];
         }
 
+        function onChangeGlobalHeaderFontUpdate() {
+            debugger
+            headerFontFamilyCounter++;
+            if (headerFontFamilyCounter > 9) {
+                headerFontFamilyCounter = 0;
+            }
+
+            $('.v-header').css("font-family", headerFontFamilies[headerFontFamilyCounter]);
+
+            let currentFontSpan = document.getElementById("spnCurrentHeaderFontFamily");
+            currentFontSpan.innerHTML = headerFontFamilies[headerFontFamilyCounter];
+        }
+
         function onClickCycleFonts() {
             onChangeGlobalFontUpdate();
+        }
+
+        function onClickCycleHeaderFonts() {
+            onChangeGlobalHeaderFontUpdate();
         }
     </script>
 

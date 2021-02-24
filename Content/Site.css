@@ -2,6 +2,79 @@
     padding-top: 60px;
 }
 
+/*font family*/
+@font-face {
+    font-family: 'Honey';
+    src: url("/fonts/HelloHoneyPersonalUse-2OEo8.otf");
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Housttely';
+    src: url("/fonts/HousttelySignature-qZo4r.ttf");
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'BrnKos';
+    src: url("/fonts/BryanKhostang-Y7Bj.ttf");
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'DancySript';
+    src: url("/fonts/DancingScript-3j68.ttf");
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'DancyScriptOT';
+    src: url("/fonts/Dancingscriptot-83xA.otf");
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Katroll';
+    src: url("/fonts/KatrineHolland-XjRG.ttf");
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Montezzy';
+    src: url("/fonts/Montez-0jZz.ttf");
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Roomood';
+    src: url("/fonts/RomateHood-p73Ed.otf");
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Wrexamscri';
+    src: url("/fonts/WrexhamScript-1nm0.ttf");
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'WrexamscriSun';
+    src: url("/fonts/WrexhamScriptLight-R0oV.ttf");
+    font-weight: normal;
+    font-style: normal;
+}
+
+/*font family*/
+
 /* Set padding to keep content from hitting the edges */
 .body-content {
     padding-left: 15px;
@@ -23,6 +96,21 @@ textarea {
 }
 
 /*begin custom css*/
+
+.v-text-area {
+    max-width: 100%;
+    min-width: 100%;
+    max-height: 600px;
+    min-height: 100px;
+}
+
+.v-truncate {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 200px;
+    overflow: hidden;
+    display: block;
+}
 
 .v-navbar-transparent {
     background-color: transparent;
@@ -115,6 +203,7 @@ textarea {
 
 .v-header {
     font-weight: 300;
+    font-family: 'Honey';
 }
 
 .v-section {
@@ -261,6 +350,11 @@ textarea {
 
 .v-extend-section {
     height: 150vh;
+}
+
+.dashbox {
+    display: block;
+    border: 1px solid gray;
 }
 
 @media (min-width: 992px) {

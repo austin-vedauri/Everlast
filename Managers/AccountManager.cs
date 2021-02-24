@@ -172,7 +172,7 @@ namespace Everlast.Managers
         {
             int result = 0;
 
-            string textCommand = "DELETE * FROM tbl_Accounts WHERE AccountGuid = @AccountGuid";
+            string textCommand = "DELETE FROM tbl_Accounts WHERE AccountGuid = @AccountGuid";
 
             using (SqlConnection connection = new SqlConnection(connectionString))
             {

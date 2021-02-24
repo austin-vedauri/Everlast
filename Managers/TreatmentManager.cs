@@ -1,4 +1,5 @@
 ﻿using Everlast.Models;
+using Everlast.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -149,7 +150,6 @@ namespace Everlast.Managers
             }
             return models;
         }
-
         public Treatment GetTreatmentByServiceGuid(Guid serviceGuid)
         {
             Treatment model = new Treatment();
@@ -176,6 +176,35 @@ namespace Everlast.Managers
                 }
             }
             return model;
+        }
+        public List<TreatmentViewModel> GetAllTreatmentsWithServiceName()
+        {
+            List<TreatmentViewModel> models = new List<TreatmentViewModel>();
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                SqlCommand command = new SqlCommand("proc_GetAllTreatmentsWithServiceName", connection);
+                command.CommandType = System.Data.CommandType.StoredProcedure;
+                connection.Open();
+
+                using (SqlDataReader reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        TreatmentViewModel model = new TreatmentViewModel
+                        {
+                            TreatmentGuid = Guid.Parse(reader["TreatmentGuid"].ToString()),
+                            ServiceGuid = Guid.Parse(reader["ServiceGuid"].ToString()),
+                            ServiceName = reader["ServiceName"].ToString(),
+                            TreatmentName = reader["TreatmentName"].ToString(),
+                            TreatmentDescription = reader["TreatmentDescription"].ToString()
+                        };
+                        models.Add(model);
+                    }
+                    connection.Close();
+                }
+            }
+            return models;
         }
     }
 }

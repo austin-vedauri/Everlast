@@ -1,5 +1,6 @@
 ﻿using Everlast.Managers;
 using Everlast.Models;
+using Everlast.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -54,9 +55,15 @@ namespace Everlast.Controllers
             return RedirectToAction("Treatments");
         }
 
-        public ActionResult Treatments()
+        public ActionResult GetBaseTreatments()
         {
             List<Treatment> models = new TreatmentManager().GetTreatments();
+            return View("Treatments", models);
+        }
+
+        public ActionResult Treatments()
+        {
+            List<TreatmentViewModel> models = new TreatmentManager().GetAllTreatmentsWithServiceName();
             return View("Treatments", models);
         }
 

@@ -150,6 +150,22 @@ namespace Everlast.Controllers
             return View(models);
         }
 
+        public ActionResult GetAccounts()
+        {
+            List<Account> models = new List<Account>();
+
+            try
+            {
+                models = new AccountManager().GetAccounts();
+            }
+            catch (Exception ex)
+            {
+                LogError(ex.Message, MethodBase.GetCurrentMethod().ToString());
+            }
+
+            return PartialView("_Accounts", models);
+        }
+
         public ActionResult Create()
         {
             return View(new Account());
