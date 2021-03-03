@@ -56,7 +56,7 @@ namespace Everlast.Managers
             {
                 SqlCommand command = new SqlCommand(textCommand, connection);
 
-                command.Parameters.AddWithValue("@PartyGuid", treatmentGuid);
+                command.Parameters.AddWithValue("@TreatmentGuid", treatmentGuid);
 
                 connection.Open();
 

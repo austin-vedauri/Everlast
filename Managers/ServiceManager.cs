@@ -1,4 +1,5 @@
 ﻿using Everlast.Models;
+using Everlast.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -19,15 +20,16 @@ namespace Everlast.Managers
             Guid serviceGuid = Guid.NewGuid();
 
             string textCommand = "INSERT INTO tbl_Services " +
-                "(ServiceGuid, Title, Description, Price, Hours, Minutes, Active)" +
+                "(ServiceGuid, ServiceTypeGuid, Title, Description, Price, Hours, Minutes, Active)" +
                 " OUTPUT INSERTED.ServiceId VALUES " +
-                "(@ServiceGuid, @Title, @Description, @Price, @Hours, @Minutes, @Active)";
+                "(@ServiceGuid, @ServiceTypeGuid, @Title, @Description, @Price, @Hours, @Minutes, @Active)";
 
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 SqlCommand command = new SqlCommand(textCommand, connection);
 
                 command.Parameters.AddWithValue("@ServiceGuid", serviceGuid);
+                command.Parameters.AddWithValue("@ServiceTypeGuid", model.ServiceTypeGuid);
                 command.Parameters.AddWithValue("@Title", model.Title);
                 command.Parameters.AddWithValue("@Description", model.Description);
                 command.Parameters.AddWithValue("@Price", model.Price);
@@ -68,6 +70,7 @@ namespace Everlast.Managers
                     while (reader.Read())
                     {
                         model.ServiceGuid = Guid.Parse(reader["ServiceGuid"].ToString());
+                        model.ServiceTypeGuid = Guid.Parse(reader["ServiceTypeGuid"].ToString());
                         model.Title = reader["Title"].ToString();
                         model.Description = reader["Description"].ToString();
                         model.Price = Convert.ToDecimal(reader["Price"].ToString());
@@ -84,13 +87,20 @@ namespace Everlast.Managers
         public int Update(Service model)
         {
             int result = 0;
-            string textCommand = "UPDATE tbl_Services SET Title = @Title, Description = @Description, Price = @Price, Hours = @Hours, Minutes = @Minutes, Active = @Active WHERE ServiceGuid = @ServiceGuid";
+            string textCommand = "UPDATE tbl_Services SET ServiceTypeGuid = @ServiceTypeGuid, Title = @Title, Description = @Description, Price = @Price, Hours = @Hours, Minutes = @Minutes, Active = @Active WHERE ServiceGuid = @ServiceGuid";
 
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 SqlCommand command = new SqlCommand(textCommand, connection);
 
                 command.Parameters.AddWithValue("@ServiceGuid", model.ServiceGuid);
+                command.Parameters.AddWithValue("@ServiceTypeGuid", model.ServiceTypeGuid);
+                command.Parameters.AddWithValue("@Title", model.Title);
+                command.Parameters.AddWithValue("@Description", model.Description);
+                command.Parameters.AddWithValue("@Price", model.Price);
+                command.Parameters.AddWithValue("@Hours", model.Hours);
+                command.Parameters.AddWithValue("@Minutes", model.Minutes);
+                command.Parameters.AddWithValue("@Active", model.Active);
 
                 connection.Open();
 
@@ -142,6 +152,7 @@ namespace Everlast.Managers
                         Service model = new Service
                         {
                             ServiceGuid = Guid.Parse(reader["ServiceGuid"].ToString()),
+                            ServiceTypeGuid = Guid.Parse(reader["ServiceTypeGuid"].ToString()),
                             Title = reader["Title"].ToString(),
                             Description = reader["Description"].ToString(),
                             Price = Convert.ToDecimal(reader["Price"].ToString()),
@@ -149,6 +160,39 @@ namespace Everlast.Managers
                             Minutes = Convert.ToInt32(reader["Minutes"].ToString()),
                             Active = Convert.ToBoolean(reader["Active"].ToString()),
                     };
+                        models.Add(model);
+                    }
+                }
+            }
+            return models;
+        }
+
+        public List<ServiceViewModel> GetServicesWithServiceTypeName()
+        {
+            List<ServiceViewModel> models = new List<ServiceViewModel>();
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                SqlCommand command = new SqlCommand("proc_GetAllServicesWithServiceTypeName", connection);
+
+                connection.Open();
+
+                using (SqlDataReader reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        ServiceViewModel model = new ServiceViewModel
+                        {
+                            ServiceGuid = Guid.Parse(reader["ServiceGuid"].ToString()),
+                            ServiceTypeGuid = Guid.Parse(reader["ServiceTypeGuid"].ToString()),
+                            ServiceTypeName = reader["ServiceTypeName"].ToString(),
+                            Title = reader["Title"].ToString(),
+                            Description = reader["Description"].ToString(),
+                            Price = Convert.ToDecimal(reader["Price"].ToString()),
+                            Hours = Convert.ToInt32(reader["Hours"].ToString()),
+                            Minutes = Convert.ToInt32(reader["Minutes"].ToString()),
+                            Active = Convert.ToBoolean(reader["Active"].ToString()),
+                        };
                         models.Add(model);
                     }
                 }

@@ -8,6 +8,7 @@ namespace Everlast.Models
     public class Service
     {
         public Guid ServiceGuid { get; set; }
+        public Guid ServiceTypeGuid { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
         public decimal Price { get; set; }

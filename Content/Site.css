@@ -1,5 +1,16 @@
 ﻿body {
     padding-top: 60px;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+* {
+    /*border: 1px solid red;*/
+}
+
+footer {
+    background-color: #2e2e2e;
+    color: white;
+    padding: 10px;
 }
 
 /*font family*/
@@ -97,6 +108,50 @@ textarea {
 
 /*begin custom css*/
 
+.NotificationCenter {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    width: 200px;
+    height: 200px;
+    z-index: 1000;
+    margin: 0px 25px 0px 0px;
+    display: none;
+}
+
+.Notification {
+    display: block;
+    width: 100%;
+    height: auto;
+    position: absolute;
+    bottom: 0px;
+    background-color: darkseagreen;
+    color: black;
+    padding: 10px;
+    border-radius: 10px;
+    margin: 10px;
+}
+
+.v-loader-overlay {
+    z-index: 1000;
+    background-color: gray;
+    opacity: .8;
+    height: 100vh;
+    width: 100vw;
+    position: fixed;
+    display: none;
+}
+
+.v-loader-text {
+    margin: 0 auto;
+    position: relative;
+    top: 45%;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+    font-size: 2em;
+    text-align: center;
+}
+
 .v-text-area {
     max-width: 100%;
     min-width: 100%;
@@ -112,9 +167,26 @@ textarea {
     display: block;
 }
 
+.remove-pad {
+    padding: 0px;
+}
+
 .v-navbar-transparent {
     background-color: transparent;
 }
+
+.v-side-nav {
+    list-style: none;
+    padding-left: 0;
+}
+
+.v-side-nav-item {
+}
+
+    .v-side-nav-item:hover {
+        border: 1px solid gray;
+        box-shadow: 1px 1px 5px -1px black;
+    }
 
 .landing {
     background-color: wheat;
@@ -132,18 +204,18 @@ textarea {
     height: 350px;
 }
 
-.outer-table table {
-    width: 100%;
-    table-layout: fixed;
-    border: 1px solid black;
-    border-spacing: 1px;
-}
+    .outer-table table {
+        width: 100%;
+        table-layout: fixed;
+        border: 1px solid black;
+        border-spacing: 1px;
+    }
 
-.outer-table table th {
-    text-align: left;
-    top: 0;
-    position: sticky;
-}
+        .outer-table table th {
+            text-align: left;
+            top: 0;
+            position: sticky;
+        }
 
 .v-cut {
     position: relative;
@@ -168,7 +240,6 @@ textarea {
 
 .v-cover-section {
     height: 100vh;
-
 }
 
 .v-cover-image {
@@ -203,7 +274,7 @@ textarea {
 
 .v-header {
     font-weight: 300;
-    font-family: 'Honey';
+    font-family: 'BrnKos';
 }
 
 .v-section {
@@ -229,7 +300,7 @@ textarea {
 }
 
 .v-block-side-half {
-    width:50%;
+    width: 50%;
     height: 100vh;
 }
 
@@ -261,10 +332,10 @@ textarea {
     font-size: 20px;
 }
 
-.v-nav-item:hover {
-    box-shadow: 1px 1px 5px -1px black;
-    /*border-radius: 60px;*/
-}
+    .v-nav-item:hover {
+        box-shadow: 1px 1px 5px -1px black;
+        /*border-radius: 60px;*/
+    }
 
 .v-card {
     margin-bottom: 35px;
@@ -383,6 +454,7 @@ textarea {
         max-width: 50%;
         margin: 0 auto;
     }
+
     .v-nav-item {
         width: 100%;
         text-align: center;
@@ -483,5 +555,17 @@ textarea {
 
 .border-gold {
     border: 1px solid #ffd700;
-    font-family:Georgia, 'Times New Roman', Times, serif;
+}
+
+.bg-metallic-gold {
+    background: linear-gradient( 0.33turn, #3f87a6, #ebf8e1, #f69d3c, #561423);
+}
+
+.bg-splice-teal-gold {
+    background-color: #008080;
+    background-image: linear-gradient(135deg, #ffd700 25%, transparent 25%);
+}
+
+.bg-gold-wave {
+    background: linear-gradient(to right, #BF953F, #FCF6BA, #B38728, #FBF5B7, #AA771C);
 }

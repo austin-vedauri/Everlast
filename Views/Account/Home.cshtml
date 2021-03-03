@@ -11,7 +11,7 @@
     <div class="row">
         <div class="col-lg-3">
             <div class="jumbotron jumbotron-slim">
-                <ul>
+                <ul class="v-side-nav">
                     @if ((int)System.Web.HttpContext.Current.Session["AccountType"] == (int)Everlast.enums.AccountTypes.Administrator)
                     {
                         <li class="v-side-nav-item">
@@ -22,6 +22,9 @@
                         </li>
                         <li class="v-side-nav-item">
                             @Html.ActionLink("Services", "Services", "Service", null, new { @class = "nav-link" })
+                        </li>
+                        <li class="v-side-nav-item">
+                            @Html.ActionLink("Service Types", "ServiceTypes", "ServiceType", null, new { @class = "nav-link" })
                         </li>
                         <li class="v-side-nav-item">
                             @Html.ActionLink("Events", "Parties", "Party", null, new { @class = "nav-link" })
@@ -45,36 +48,7 @@
         <div class="col-lg-9">
             <div class="jumbotron jumbotron-slim">
 
-                <div class="row">
-                    <div class="col-lg-12">
-                        <span>Welcome @Model.FirstName</span>
-                        <span>
-                            Today is @DateTime.Now.ToShortDateString()
-                        </span>
-                    </div>
-                    <div class="col-lg-4">
-                        <div class="dashbox">
-                            You have 0 appointments scheduled
-                        </div>
-                    </div>
-                    <div class="col-lg-4">
-                        <div class="dashbox">
-                            There are 0 events scheduled
-                        </div>
-                    </div>
-                    <div class="col-lg-4">
-                        <div class="dashbox">
-                            You are not scheduled to work
-                        </div>
-                    </div>
-                </div>
-
-                @*
-                    TODO:
-
-                    create some cool widgets like "My Appointments Today: 2"
-
-                *@
+                Load a partial view to display information based on account type.
 
             </div>
         </div>

@@ -96,7 +96,6 @@
 
         function LoadServices() {
             Everlast.Request.DropData('@Url.Action("GetAvailableServices", "Helper")', "ServiceGuid", null, "@Model.ServiceGuid");
-            console.log("@Model.ServiceGuid");
         }
 
         function LoadPeriods() {

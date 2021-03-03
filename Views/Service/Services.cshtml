@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Everlast.Models.Service>
+﻿@model IEnumerable<Everlast.ViewModels.ServiceViewModel>
 
 @{
     ViewBag.Title = "Services";
@@ -16,6 +16,9 @@
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ServiceTypeName)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Description)
@@ -43,6 +46,9 @@
             <tr>
                 <td>
                     @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ServiceTypeName)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Description)

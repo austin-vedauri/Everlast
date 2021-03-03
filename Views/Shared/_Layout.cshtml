@@ -8,6 +8,12 @@
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
+    <div class="v-loader-overlay" id="dvLoading">
+        <div class="v-loader-text">
+            Loading...
+        </div>
+    </div>
+
     <nav class="navbar navbar-expand-lg fixed-top navbar-light bg-light v-custom-nav v-box-shadow">
         <button class="navbar-toggler v-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             @*<span class="navbar-toggler-icon"></span>*@
@@ -46,6 +52,9 @@
             </ul>
         </div>
     </nav>
+
+    <div class="NotificationCenter" id="dvNotificationCenter"></div>
+
     <div id="dvMainBody" class="container-fluid body-content">
         @RenderBody()
         <hr />
@@ -68,75 +77,7 @@
 
         });
 
-        // events
-        $("#btnCycleFont").click(() => onClickCycleFonts());
-        $("#btnCycleHeaderFont").click(() => onClickCycleHeaderFonts());
 
-        // testLists
-        let fontFamilyCounter = 0;
-        let headerFontFamilyCounter = 0;
-
-        let fontFamilies = [
-            "'Franklin Gothic Medium', 'Arial Narrow', Arial, sans- serif",
-            "'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif",
-            "Georgia, 'Times New Roman', Times, serif"
-        ];
-
-        let headerFontFamilies = [
-            "Honey",
-            "Housttely",
-            "BrnKos",
-            "DancySript",
-            "DancyScriptOT",
-            "Katroll",
-            "Montezzy",
-            "Roomood",
-            "Wrexamscri",
-            "WrexamscriSun",
-        ];
-
-        // functions
-        function onChangeGlobalViewRequest() {
-            console.log(location.pathname);
-            $('a[href$="' + location.pathname + '"]').addClass('active');
-        }
-
-        function onChangeGlobalFontUpdate() {
-
-            console.log(fontFamilyCounter);
-            console.log(fontFamilies[fontFamilyCounter]);
-
-            fontFamilyCounter++;
-            if (fontFamilyCounter > 2) {
-                fontFamilyCounter = 0;
-            }
-
-            let body = document.getElementById("dvMainBody");
-            body.style.fontFamily = fontFamilies[fontFamilyCounter];
-            let currentFontSpan = document.getElementById("spnCurrentFontFamily");
-            currentFontSpan.innerHTML = fontFamilies[fontFamilyCounter];
-        }
-
-        function onChangeGlobalHeaderFontUpdate() {
-            debugger
-            headerFontFamilyCounter++;
-            if (headerFontFamilyCounter > 9) {
-                headerFontFamilyCounter = 0;
-            }
-
-            $('.v-header').css("font-family", headerFontFamilies[headerFontFamilyCounter]);
-
-            let currentFontSpan = document.getElementById("spnCurrentHeaderFontFamily");
-            currentFontSpan.innerHTML = headerFontFamilies[headerFontFamilyCounter];
-        }
-
-        function onClickCycleFonts() {
-            onChangeGlobalFontUpdate();
-        }
-
-        function onClickCycleHeaderFonts() {
-            onChangeGlobalHeaderFontUpdate();
-        }
     </script>
 
 </body>

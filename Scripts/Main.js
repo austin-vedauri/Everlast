@@ -2,6 +2,8 @@
     Request: {
         DropData: function (location, id, args = null, selectedOption = null) {
 
+            Everlast.Display.ShowLoadOverlay();
+
             let option, drop;
             drop = document.getElementById(id);
             $.ajax({
@@ -35,14 +37,20 @@
                         drop.appendChild(option);
 
                     }
+
+                    Everlast.Display.HideLoadOverlay();
                 },
                 fail: function (data) {
                     console.log("Error binding dropdown data to dropdown: " + id);
                     console.log(data.StatusText);
+                    Everlast.Display.HideLoadOverlay();
                 }
             });
         },
         ObjectData: function (location, args = null) {
+
+            Everlast.Display.ShowLoadOverlay();
+
             $.ajax({
                 type: "POST",
                 url: location,
@@ -51,14 +59,19 @@
                 data: JSON.stringify(args),
                 success: function (data) {
                     $("#spnPartyTitle").text(data.Title);
+                    Everlast.Display.HideLoadOverlay();
                 },
                 fail: function (data) {
                     console.log("Error requesting object...");
                     console.log(data.StatusText);
+                    Everlast.Display.HideLoadOverlay();
                 }
             });
         },
         ViewData: function (location, id, args = null) {
+
+            Everlast.Display.ShowLoadOverlay();
+
             $.ajax({
                 type: "POST",
                 async: false,
@@ -69,15 +82,19 @@
                 success: function (data) {
                     $("#" + id).html("");
                     $("#" + id).html(data);
+                    Everlast.Display.HideLoadOverlay();
                 },
                 fail: function (data) {
                     console.log("Error requesting view...");
                     console.log(data.StatusText);
+                    Everlast.Display.HideLoadOverlay();
                 }
             });
         },
         DeleteData: function (location, args) {
-            debugger
+
+            Everlast.Display.ShowLoadOverlay();
+
             $.ajax({
                 type: "POST",
                 async: false,
@@ -89,13 +106,39 @@
                     if (data > 1) {
                          
                     }
+
+                    Everlast.Display.HideLoadOverlay();
                 },
                 fail: function (data) {
                     console.log("Error requesting delete...");
                     console.log(data.StatusText);
+                    Everlast.Display.HideLoadOverlay();
                 }
             });
         },
+    },
+    Display: {
+        ShowLoadOverlay: function () {
+            let eLoad = document.getElementById('dvLoading');
+            eLoad.style.display = 'block';
+        },
+        HideLoadOverlay: function () {
+            let eLoad = document.getElementById('dvLoading');
+            eLoad.style.display = 'none';
+        },
+        Notification: function (text) {
+            let notificationElement = document.createElement("div");
+            notificationElement.classList.add('Notification');
+
+            let notificationTextElement = document.createElement("span");
+            notificationTextElement.innerText = text;
+
+            notificationElement.appendChild(notificationTextElement);
+
+            let notificationCenterElement = document.getElementById("dvNotificationCenter");
+
+            notificationCenterElement.appendChild(notificationElement);
+        }
     },
 };
 

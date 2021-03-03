@@ -11,12 +11,20 @@
 {
     @Html.AntiForgeryToken()
     @Html.HiddenFor(model => model.ServiceGuid)
-    
+
     <div class="form-horizontal">
         <h4>Service</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        
+
+        <div class="form-group">
+            <label class="control-label col-md-2">Select Service Type</label>
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.ServiceTypeGuid, new SelectList(string.Empty, "Value", "Text", Model.ServiceTypeGuid), new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.ServiceTypeGuid, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
         <div class="form-group">
             @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -69,9 +77,27 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
+                <input type="submit" value="Save" class="btn btn-outline-dark" />
             </div>
         </div>
     </div>
 }
 
+@section scripts {
+
+    <script type="text/javascript">
+        // load
+        $(document).ready(function () {
+            LoadServiceTypes();
+        });
+
+        // events
+
+
+        // functions
+        function LoadServiceTypes() {
+            Everlast.Request.DropData('@Url.Action("GetAvailableServiceTypes", "Helper")', "ServiceTypeGuid", null, null);
+        }
+    </script>
+
+}

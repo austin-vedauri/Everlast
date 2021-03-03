@@ -184,5 +184,34 @@ namespace Everlast.Controllers
                 return true;
             }
         }
+
+        [HttpPost]
+        public JsonResult GetAvailableServiceTypes()
+        {
+            List<ServiceType> models = new ServiceTypeManager().GetServiceTypes();
+
+            List<SelectListItem> modelsSelectList = new List<SelectListItem>
+            {
+                new SelectListItem
+                {
+                    Text = "Select Service Type",
+                    Value = Guid.Empty.ToString()
+                }
+            };
+
+            if (models != null)
+            {
+                foreach (ServiceType model in models)
+                {
+                    modelsSelectList.Add(new SelectListItem
+                    {
+                        Text = model.ServiceTypeName,
+                        Value = model.ServiceTypeGuid.ToString()
+                    });
+                }
+            }
+
+            return Json(new SelectList(modelsSelectList, "Value", "Text"), JsonRequestBehavior.AllowGet);
+        }
     }
 }

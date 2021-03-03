@@ -1,6 +1,7 @@
 ﻿using Everlast.enums;
 using Everlast.Managers;
 using Everlast.Models;
+using Everlast.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +14,7 @@ namespace Everlast.Controllers
     {
         public ActionResult Services()
         {
-            List<Service> services = new ServiceManager().GetServices();
+            List<ServiceViewModel> services = new ServiceManager().GetServicesWithServiceTypeName();
             return View(services);
         }
 

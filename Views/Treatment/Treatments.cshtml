@@ -45,8 +45,8 @@
                 </span>
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { treatmentGuid = item.TreatmentGuid }, new { @class = "btn btn-sm btn-outline-dark" })
-                @Html.ActionLink("Details", "Details", new { treatmentGuid = item.TreatmentGuid }, new { @class = "btn btn-sm btn-outline-dark" })
+                @Html.ActionLink("Edit", "Update", new { treatmentGuid = item.TreatmentGuid }, new { @class = "btn btn-sm btn-outline-dark" })
+                @Html.ActionLink("Details", "Read", new { treatmentGuid = item.TreatmentGuid }, new { @class = "btn btn-sm btn-outline-dark" })
                 @Html.ActionLink("Delete", "Delete", new { treatmentGuid = item.TreatmentGuid }, new { @class = "btn btn-sm btn-outline-dark" })
             </td>
         </tr>

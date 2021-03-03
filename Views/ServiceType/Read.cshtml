@@ -1,0 +1,26 @@
+﻿@model Everlast.Models.ServiceType
+
+@{
+    ViewBag.Title = "Read";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Read</h2>
+
+<div>
+    <h4>ServiceType</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            Service Type Name
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ServiceTypeName)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Update", new { serviceTypeGuid = Model.ServiceTypeGuid }, new { @class = "btn btn-sm btn-outline-dark" })
+</p>
