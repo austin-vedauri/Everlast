@@ -30,7 +30,7 @@ namespace Everlast.Managers
                 Host = "relay-hosting.secureserver.net",
                 Port = 587,
                 UseDefaultCredentials = false,
-                Credentials = new System.Net.NetworkCredential("vedauri@gmail.com", "Rh33se!!07"),
+                Credentials = new System.Net.NetworkCredential("vedauri@gmail.com", "***************"),
                 EnableSsl = true
             };
 
